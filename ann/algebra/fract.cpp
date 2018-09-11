@@ -1,7 +1,7 @@
-#include "fract.hpp"
+#include "includes.hpp"
 
 Fraction::Fraction(int up, int dw){
-
+	if(dw == 0) dw = 1;
 	for(int i = min(abs(up),abs(dw)); i>0; i--){
 		if(up % i == 0 and dw % i == 0){
 			up /= i; dw /= i;

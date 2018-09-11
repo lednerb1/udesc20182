@@ -1,11 +1,15 @@
+#include <bits/stdc++.h>
 #include "fract.hpp"
+using namespace std;
 
 class Matrix {
 	
 private:
 	int r;
 	int c;
-	vector<Fraction> matrix;
+	vector<Fraction*> * matrix;
 public:
 	Matrix(int r, int c);
+	void show();
+	void insertData(Fraction* f, int i,int j);
 };
