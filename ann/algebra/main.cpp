@@ -1,12 +1,14 @@
-#include "includes.hpp"
+#include <bits/stdc++.h>
+#include "fract.hpp"
+#include "matrix.hpp"
+#include "func.hpp"
 
 void __debugParser__();
 void __debugFraction__();
 
 int main(){
-	
-	__debugParser__();
-	return 0;
+
+	int tam;
 	cout << "Tam matriz: "; cin >> tam;
 	cout << "Criando matriz\n";
 	Matrix * mat = new Matrix(tam,tam);
@@ -23,6 +25,7 @@ int main(){
 		}
 	}
 
+	mat->show();
 	cout << endl;
 }
 

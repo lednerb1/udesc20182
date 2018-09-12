@@ -1,4 +1,4 @@
-#include "includes.hpp"
+#include "matrix.hpp"
 
 Matrix::Matrix(int r, int c){
 	this->r = r; this->c = c;
@@ -13,7 +13,7 @@ Matrix::Matrix(int r, int c){
 void Matrix::show(){
 	for(int i=0; i<this->r; i++){
 		for(auto j : matrix[i]){
-			cout << j->show() << " ";
+			printf("%3s ", j->show().c_str());
 		}
 		cout << endl;
 	}
