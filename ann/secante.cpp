@@ -13,7 +13,7 @@ int main(){
 	ll x0, x1, x2;
 	cin >> x0 >> x1;
 
-	for(int i=0; abs(x1-x0) <= 1e-3L; i++){
+	for(int i=0; i<15; i++){
 		ll fx0 = f(x0);
 		ll fx1 = f(x1);
 		x2 = (x1*fx0 - x0*fx1) / (fx0 - fx1);

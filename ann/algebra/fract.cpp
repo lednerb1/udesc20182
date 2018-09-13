@@ -17,7 +17,7 @@ Fraction::Fraction(int up, int dw){
 }
 
 Fraction::Fraction(Fraction * a, Fraction * b){
-	cout << "Created : " << a->show() << " / " << b->show() << endl;
+	//cout << "Created : " << a->show() << " / " << b->show() << endl;
 	Fraction * tmp = *a / *b;
 	this->up = tmp->up;
 	this->dw = tmp->dw;
