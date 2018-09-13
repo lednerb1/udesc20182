@@ -13,4 +13,6 @@ public:
 	Matrix(int r, int c);
 	void show();
 	void insertData(Fraction* f, int i,int j);
+	Fraction * getData(int i, int j);
+	void scal();
 };

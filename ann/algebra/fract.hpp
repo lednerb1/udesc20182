@@ -10,6 +10,7 @@ private:
 
 public:
 	Fraction(int up,int dw);
+	Fraction(Fraction * a, Fraction * b);
 	Fraction * add(Fraction& o);
 	Fraction * add(int o);
 	Fraction * sub(Fraction& o);

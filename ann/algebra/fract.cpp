@@ -1,16 +1,27 @@
 #include "includes.hpp"
 
 Fraction::Fraction(int up, int dw){
-	if(dw == 0) dw = 1;
+	if(dw == 0 or up == 0) dw = 1;
 	for(int i = min(abs(up),abs(dw)); i>0; i--){
 		if(up % i == 0 and dw % i == 0){
 			up /= i; dw /= i;
 			break;
 		}
 	}
-
+	if(up < 0 and dw < 0){
+		up *= -1;
+		dw *= -1;
+	}
 	this->up = up;
 	this->dw = dw;
+}
+
+Fraction::Fraction(Fraction * a, Fraction * b){
+	cout << "Created : " << a->show() << " / " << b->show() << endl;
+	Fraction * tmp = *a / *b;
+	this->up = tmp->up;
+	this->dw = tmp->dw;
+	free(tmp);
 }
 
 Fraction * Fraction::add(Fraction& o){
@@ -60,7 +71,10 @@ Fraction * Fraction::mul(int o){
 }
 
 Fraction * Fraction::div(Fraction& o){
-	return new Fraction(this->up/o.up, this->dw/o.dw);
+	//if(this->dw == 1 and o.dw == 1){
+	//	return new Fraction(this->up, o->up);
+	//}
+	return new Fraction(this->up*o.dw, this->dw*o.up);
 }
 
 Fraction * Fraction::div(int o){

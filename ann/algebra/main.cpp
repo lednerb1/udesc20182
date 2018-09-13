@@ -8,23 +8,26 @@ void __debugFraction__();
 
 int main(){
 
-	int tam;
-	cout << "Tam matriz: "; cin >> tam;
+	int tam1, tam2;
+	cout << "Tam matriz: "; cin >> tam1 >> tam2;
 	cout << "Criando matriz\n";
-	Matrix * mat = new Matrix(tam,tam);
+	Matrix * mat = new Matrix(tam1,tam2);
 	cout << "Matriz criada\n";
 	mat->show();
 	cout << "\n";
 	cout << "Entre com fracoes no formato a/b\n";
-	cout << "Lendo matriz " << tam << "x" << tam << "\n";
+	cout << "Lendo matriz " << tam1 << "x" << tam2 << "\n";
 
-	for(int i=0; i<tam; i++){
-		for(int j=0; j<tam; j++){
+	for(int i=0; i<tam1; i++){
+		for(int j=0; j<tam2; j++){
 			Fraction * tmp = parseInput();
 			mat->insertData(tmp, i, j);
 		}
 	}
 
+	mat->show();
+	cout << endl;
+	mat->scal();
 	mat->show();
 	cout << endl;
 }
