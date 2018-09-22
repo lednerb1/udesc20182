@@ -1,12 +1,12 @@
 #include <string>
 
-class Person {
+class Candidato {
 private:
     std::string name;
     unsigned int number;
     unsigned int votos;
 public:
-    Person(std::string name, unsigned int number);
+    Candidato(std::string name, unsigned int number);
     std::string getName();
     unsigned int getNumber();
 };

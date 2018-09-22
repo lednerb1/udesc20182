@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+using namespace std;
 /* Include para trabalho de apuracao de votos */
 
 /* string de formato para cabecalho da lista de votos */
@@ -6,3 +8,5 @@
 
 /* string de formato para votos de cada candidato */
 #define fmtvoto "%8u  %-30s  %13u  %6.2f\n"
+
+bool getFiles(vector<string>& files, const char * name, const char * nthr, unsigned int ithr);
