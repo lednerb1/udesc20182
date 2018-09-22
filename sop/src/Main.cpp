@@ -39,6 +39,6 @@ int main(int argc, const char * args[]){
   }
 
   Contador * contador = new Contador(files[0]);
-
+  contador->contabiliza_voto(5);
   return 0;
 }

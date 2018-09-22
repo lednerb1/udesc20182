@@ -5,13 +5,16 @@
 
 class Queue {
 private:
-  static int size;
+  static unsigned int size;
+  static unsigned int maxSize;
   static Queue * last;
-  int n;
+  unsigned int n;
+  Queue * node;
   Queue * next;
+  Queue(unsigned int n);
 public:
-  Queue(int n, NULL);
-  int getNext();
+  unsigned int getNext();
+  void add(unsigned int n);
   bool isEmpty();
 
 };
@@ -19,9 +22,8 @@ public:
 class Contador {
 
 private:
-    Queue * que;
+    Queue * queue;
     std::vector<Candidato> candidatos;
-    int maxSize=0;
 public:
     Contador(std::string);
     void contabiliza_voto(unsigned int voto);
