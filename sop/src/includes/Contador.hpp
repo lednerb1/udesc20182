@@ -3,10 +3,18 @@
 #include <vector>
 #include "Candidato.hpp"
 
-typedef struct q {
-    int n;
-    struct q * next;
-} Queue;
+class Queue {
+private:
+  static int size;
+  static Queue * last;
+  int n;
+  Queue * next;
+public:
+  Queue(int n, NULL);
+  int getNext();
+  bool isEmpty();
+
+};
 
 class Contador {
 
