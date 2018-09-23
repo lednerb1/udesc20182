@@ -1,10 +1,16 @@
 #include <cstdio>
+#include <string>
+#include <fstream>
+#include <set>
+#include "Queue.hpp"
 
 class Validator {
 private:
-    FILE * arq; //Arquivo de votos !!!
-    int * vet;  //Buffer de votos !!!
+    static std::set<unsigned int> candidates;
+    std::string arq; //Arquivo de votos !!
+    void load(std::string arquivo);
 public:
-    Validator(FILE *);
-
+    Validator(std::string arquivo);
+    Validator(std::string arquivo, std::string nthread);
+    void work(Queue* & queue);
 };

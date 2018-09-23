@@ -1,6 +1,7 @@
 //#include <bits/stdc++.h>
 #include "includes/utils.hpp"
 #include "includes/Contador.hpp"
+#include "includes/Validator.hpp"
 #include <pthread.h>
 #include <cstdlib>
 
@@ -38,8 +39,21 @@ int main(int argc, const char * args[]){
   for(auto s : files){
     cout << s << endl;
   }
-
+  /*
+  Aqui deve ser inserido o codigo para iniciar as Threads
+  Todas as Threads vao estar separadas executando seus pro
+  prios metodos, inclusive o contador, entao nada roda na
+  Main. A chamada do Validator(files[0]) serve para criar
+  um static set com o numero de todos os possiveis candida
+  tos. Desta maneira, todas as threads Validator tem aces
+  so a esse set e conseguem fazer a validacao de um voto
+  em O( LogN ) onde N = quantidade de candidatos. 
+  */
   Contador * contador = new Contador(files[0]);
+  Validator * validator = new Validator(files[0]);
+  delete validator;
+  //Contador deve avisar as demais Threads que esta pronto;
+
   for(int i=0; i<50; i++){
     if(random() % 2){
       contador->contabiliza_voto();

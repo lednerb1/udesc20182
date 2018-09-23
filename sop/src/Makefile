@@ -21,7 +21,7 @@ LDFLAGS = -lm
 # In this section, you list the files that are part of the project.
 # If you add/change names of source files, here is where you
 # edit the Makefile.
-SOURCES = Candidato.cpp Contador.cpp Validator.cpp utils.cpp Main.cpp
+SOURCES = Candidato.cpp Contador.cpp Validator.cpp utils.cpp Queue.cpp Main.cpp
 OBJECTS = $(SOURCES:.cpp=.cpp)
 TARGET = demo
 
