@@ -4,6 +4,7 @@
 #include "includes/Validator.hpp"
 #include <pthread.h>
 #include <cstdlib>
+#include <vector>
 
 using namespace std;
 
@@ -47,24 +48,41 @@ int main(int argc, const char * args[]){
   um static set com o numero de todos os possiveis candida
   tos. Desta maneira, todas as threads Validator tem aces
   so a esse set e conseguem fazer a validacao de um voto
-  em O( LogN ) onde N = quantidade de candidatos. 
+  em O( LogN ) onde N = quantidade de candidatos.
   */
   Contador * contador = new Contador(files[0]);
   Validator * validator = new Validator(files[0]);
   delete validator;
   //Contador deve avisar as demais Threads que esta pronto;
 
-  for(int i=0; i<50; i++){
-    if(random() % 2){
-      contador->contabiliza_voto();
-    }else{
-      contador->beta_adiciona_voto(i);
-    }
-  }cout << endl;
+  vector<Validator*> v(ithreads);
+
+  for(int i=1; i<=ithreads; i++){
+    cout << "Creating Validator " << files[i] << endl;
+    v[i-1] = new Validator(files[i], i);
+  }
+
+  for(auto& i : v){
+    i->work(contador->queue);
+  }
+
   while(!contador->queue->isEmpty()){
     contador->contabiliza_voto();
   }
 
   contador->listVotes();
+
+  // for(int i=0; i<50; i++){
+  //   if(random() % 2){
+  //     contador->contabiliza_voto();
+  //   }else{
+  //     contador->beta_adiciona_voto(i);
+  //   }
+  // }cout << endl;
+  // while(!contador->queue->isEmpty()){
+  //   contador->contabiliza_voto();
+  // }
+  //
+  // contador->listVotes();
   return 0;
 }

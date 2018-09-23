@@ -75,6 +75,6 @@ void Contador::beta_adiciona_voto(unsigned int voto){
 
 void Contador::listVotes(){
   for(auto& i : votos){
-    cout << i.first << i.second << endl;
+    cout << i.first << ": " << i.second << endl;
   }
 }
