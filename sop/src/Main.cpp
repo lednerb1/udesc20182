@@ -2,6 +2,7 @@
 #include "includes/utils.hpp"
 #include "includes/Contador.hpp"
 #include <pthread.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -39,6 +40,17 @@ int main(int argc, const char * args[]){
   }
 
   Contador * contador = new Contador(files[0]);
-  contador->contabiliza_voto(5);
+  for(int i=0; i<50; i++){
+    if(random() % 2){
+      contador->contabiliza_voto();
+    }else{
+      contador->beta_adiciona_voto(i);
+    }
+  }cout << endl;
+  while(!contador->queue->isEmpty()){
+    contador->contabiliza_voto();
+  }
+
+  contador->listVotes();
   return 0;
 }
