@@ -6,11 +6,12 @@
 #include <cstdlib>
 #include <vector>
 
-using namespace std;
-
 pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t emptyq = PTHREAD_COND_INITIALIZER;
-pthread_barrier_t barrier;
+pthread_barrier_t barrier_init, barrier_end;
+
+
+using namespace std;
 
 int main(int argc, const char * args[]){
 
@@ -53,8 +54,12 @@ int main(int argc, const char * args[]){
     cerr << "Erro ao criar condq\n";
     exit(1);
   }
-  if(pthread_barrier_init(&barrier), NULL, ithreads){
-    cerr << "Erro ao criar barreira\n";
+  if(pthread_barrier_init(&barrier_init, NULL, ithreads+1)){
+    cerr << "Erro ao criar barreira_init\n";
+    exit(1);
+  }
+  if(pthread_barrier_init(&barrier_end, NULL, ithreads)){
+    cerr << "Erro ao criar barreira_end\n";
     exit(1);
   }
   /*
@@ -72,25 +77,31 @@ int main(int argc, const char * args[]){
   delete validator;
   //Contador deve avisar as demais Threads que esta pronto;
 
-  vector< pair<Validator*, int> > validators(ithreads);
-  vector<pthread_t> threads(ithreads);
 
-  for(int i=1; i<=ithreads; i++){
-    cout << "Creating Validator " << files[i] << endl;
-    validators[i-1].first = new Validator(files[i], i);
-    validators[i-1].second = pthread_create(&threads[i], NULL, (void *)validators[i-1].first->work(), (void *) validators[i-1].first->work());
-  }
-  bool quebrou = false;
-  for(int i=1; i<= threads; i++){
-      if(validators[i-1].second == 0){
-          cerr << "Erro na criação da thread " << i << endl;
-          quebrou = true;
-      }
-  }
-  if(quebrou) exit(1);
 
-  while(!contador->queue->isEmpty()){
-    contador->contabiliza_voto();
+  vector< pair<Validator*, int> > validators(ithreads+1);
+  vector<pthread_t> threads(ithreads+1);
+
+  validators[0].second = pthread_create(&threads[0], NULL, Contador::work, NULL);
+
+  for(unsigned int i=1; i<=ithreads; i++){
+    printf("Creating Validator %s\n", files[i].c_str());
+    // cout << "Creating Validator " << files[i] << endl;
+    validators[i].first = new Validator(files[i], i);
+
+    Data * data = new Data();
+    data->queue = &contador->queue;
+    data->file = validators[i].first->getArq();
+    validators[i].second = pthread_create(&threads[i], NULL, Validator::work, data);
+    if(validators[i].second){
+      cerr << "Erro na criação da thread " << i << endl;
+      exit(1);
+    }
+
+  }
+
+  for(unsigned int i=0; i<=ithreads; i++){
+    pthread_join(threads[i], NULL);
   }
 
   contador->listVotes();

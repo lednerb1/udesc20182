@@ -15,7 +15,7 @@ Queue::Queue(){
 
 unsigned int Queue::getNext(){
   if(this->isEmpty()){
-    return -1;
+    return 0x3f3f3f3f;
   }
   size--;
   unsigned int returner = this->node->n;
@@ -26,7 +26,7 @@ unsigned int Queue::getNext(){
   return returner;
 }
 
-int Queue::getSize(){
+unsigned int Queue::getSize(){
   return Queue::size;
 }
 

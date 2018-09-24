@@ -1,4 +1,8 @@
+#include "includes/shared.hpp"
+#include "includes/utils.hpp"
 #include "includes/Validator.hpp"
+#include "includes/Contador.hpp"
+#include "includes/Queue.hpp"
 #include <pthread.h>
 #include <cstdio>
 
@@ -43,15 +47,20 @@ Validator::Validator(string arq, unsigned int ntr){
 }
 
 bool Validator::isValid(unsigned int n){
-  return (this->candidates.find(n) != this->candidates.end());
+  return (Validator::candidates.find(n) != Validator::candidates.end());
 }
 
-void Validator::work(void* &queue){
-  ifstream in(this->arq, ios::in);
-  queue = (Queue*)queue; // aqui pode dar merda
+void * Validator::work(void* data){
+  // *(arguments *) (args);
+  Data data_w = *(Data*) (data);
+  string arq = data_w.file;
+  Queue ** queue = data_w.queue;
+  ifstream in(arq, ios::in);
 
   //Avisa as demais Threads que esta pronto
-  cout << this->arq << " Ready\n";
+  printf("%s Ready\n", arq.c_str());
+  // cout << arq << " Ready\n";
+  pthread_barrier_wait(&barrier_init);
   //Aguarda as demais Threads se necessario
 
   while(true){
@@ -64,20 +73,25 @@ void Validator::work(void* &queue){
       break;
 
     n = (unsigned int)stoi(line);
-    if(this->isValid(n)){
+    if(Validator::isValid(n)){
       pthread_mutex_lock(&mtx);
-      queue->add(n);
-      if(queue->getSize() == 1){
-        pthread_cond_signal(&condq);
+      printf("adding %d\n", n);
+      (*queue)->add(n);
+      if((*queue)->getSize() == 1){
+        pthread_cond_signal(&emptyq);
       }
       pthread_mutex_unlock(&mtx);
     }
 
   }
 
-  pthread_barrier_wait(&barrier);
+  pthread_barrier_wait(&barrier_end);
   //Avisa as demais Threads que terminou de
   //validar os votos referentes a seu arquivo
+  Contador::setDone(true);
+  pthread_exit(NULL);
+}
 
-
+string Validator::getArq(){
+    return this->arq;
 }

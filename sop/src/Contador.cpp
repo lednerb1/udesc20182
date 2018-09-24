@@ -1,11 +1,21 @@
+#include "includes/shared.hpp"
 #include "includes/Contador.hpp"
+#include "includes/utils.hpp"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
 
 using namespace std;
 
+map<int,int> Contador::votos;
+Queue * Contador::queue;
+bool Contador::done = false;
+
 Contador::Contador(string filename){
+
+  if(this->candidatos.size() > 1){
+    return;
+  }
 
   ifstream in(filename,ios::in);
   string line;
@@ -56,32 +66,47 @@ Contador::Contador(string filename){
 
 }
 
-void Contador::work(void *sla_meu_batman){
-  while(true){
-    int candidate;
-    //Semaforo pra ver se tem elemento na fila
-    pthread_mutex_lock(&mtx);
-    if(this->queue->isEmpty()){
-      pthread_cond_wait(&condq, &mtx);
-    }
-    candidate = this->queue->getNext();
-    pthread_mutex_unlock(&mtx);
-    this->contabiliza_voto(candidate);
-  }
+void Contador::contabiliza_voto(unsigned int voto){
 
-  pthread_exit(NULL);
-
-}
-
-void Contador::contabiliza_voto(int voto){
-
-  if(candidate != -1){
-    this->votos.find(candidate)->second++;
-    cout << "Queue--\n";
+  if(voto != 0x3f3f3f3f){
+    Contador::votos.find(voto)->second++;
+    printf("Queue-- : Size = %u\n", Contador::queue->getSize());
   }else{
     cout << "Queue is empty, wait for more data\n";
   }
 
+}
+
+bool Contador::isDone(){
+  return Contador::done;
+}
+
+void Contador::setDone(bool x){
+  Contador::done = x;
+}
+
+void * Contador::work(void *sla_meu_batman){
+
+  pthread_barrier_wait(&barrier_init);
+
+  while(true){
+    unsigned int candidate;
+    //Semaforo pra ver se tem elemento na fila
+    pthread_mutex_lock(&mtx);
+    if(Contador::queue->isEmpty()){
+      if(Contador::isDone()){
+        pthread_mutex_unlock(&mtx);
+        break;
+      }
+      pthread_cond_wait(&emptyq, &mtx);
+    }
+    candidate = Contador::queue->getNext();
+    printf("removing %u\n", candidate);
+    pthread_mutex_unlock(&mtx);
+    contabiliza_voto(candidate);
+  }
+
+  pthread_exit(NULL);
 }
 
 void Contador::beta_adiciona_voto(unsigned int voto){

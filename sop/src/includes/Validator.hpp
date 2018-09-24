@@ -12,6 +12,7 @@ private:
 public:
     Validator(std::string arquivo);
     Validator(std::string arquivo, unsigned int ithread);
-    bool isValid(unsigned int n);
-    void work(void* queue);
+    static bool isValid(unsigned int n);
+    std::string getArq();
+    static void * work(void* queue);
 };

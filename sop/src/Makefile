@@ -12,11 +12,7 @@ CC = g++
 #  -Wall       give verbose compiler warnings
 #  -O0         do not optimize generated code
 #  -std=c++11  use the C++11 standard language definition
-CFLAGS = -g -Wall -O0 -std=c++11
-
-# The LDFLAGS variable sets flags for linker
-#  -lm   says to link in libm (the math library)
-LDFLAGS = -lm
+CFLAGS = -g -Wall -O0 -std=c++11 -pthread
 
 # In this section, you list the files that are part of the project.
 # If you add/change names of source files, here is where you
@@ -32,7 +28,7 @@ TARGET = demo
 # assume that it depends on all the named OBJECTS files.
 
 $(TARGET) : $(OBJECTS)
-	reset && $(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
+	reset && $(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
 
 # Phony means not a "real" target, it doesn't build anything
 # The phony target "clean" is used to remove all compiled object files.
