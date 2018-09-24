@@ -60,12 +60,12 @@ void Contador::work(void *sla_meu_batman){
   while(true){
     int candidate;
     //Semaforo pra ver se tem elemento na fila
-    pthread_mutex_lock(&mutex);
+    pthread_mutex_lock(&mtx);
     if(this->queue->isEmpty()){
-      pthread_cond_wait(&condq, &mutex);
+      pthread_cond_wait(&condq, &mtx);
     }
     candidate = this->queue->getNext();
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mtx);
     this->contabiliza_voto(candidate);
   }
 

@@ -1,5 +1,4 @@
 #include <cstdlib>
-#include <pthread.h>
 #include <vector>
 #include <map>
 #include "Queue.hpp"

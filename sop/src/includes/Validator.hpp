@@ -13,5 +13,5 @@ public:
     Validator(std::string arquivo);
     Validator(std::string arquivo, unsigned int ithread);
     bool isValid(unsigned int n);
-    void work((void*) &queue);
+    void work(void* queue);
 };

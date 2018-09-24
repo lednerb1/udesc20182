@@ -8,9 +8,9 @@
 
 using namespace std;
 
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t emptyq = PTHREAD_COND_INITIALIZER;
-pthread_barrier_t barrier = PTHREAD_BARRIER_INITIALIZER;
+pthread_barrier_t barrier;
 
 int main(int argc, const char * args[]){
 
@@ -45,7 +45,7 @@ int main(int argc, const char * args[]){
     cout << s << endl;
   }
 
-  if(pthread_mutex_init(&mutex, NULL)){
+  if(pthread_mutex_init(&mtx, NULL)){
       cerr << "Erro ao criar mutex\n";
       exit(1);
   }
@@ -89,27 +89,11 @@ int main(int argc, const char * args[]){
   }
   if(quebrou) exit(1);
 
-  for(auto& i : v){
-    i->work(contador->queue);
-  }
-
   while(!contador->queue->isEmpty()){
     contador->contabiliza_voto();
   }
 
   contador->listVotes();
 
-  // for(int i=0; i<50; i++){
-  //   if(random() % 2){
-  //     contador->contabiliza_voto();
-  //   }else{
-  //     contador->beta_adiciona_voto(i);
-  //   }
-  // }cout << endl;
-  // while(!contador->queue->isEmpty()){
-  //   contador->contabiliza_voto();
-  // }
-  //
-  // contador->listVotes();
   return 0;
 }

@@ -46,7 +46,7 @@ bool Validator::isValid(unsigned int n){
   return (this->candidates.find(n) != this->candidates.end());
 }
 
-void Validator::work((void*) &queue){
+void Validator::work(void* &queue){
   ifstream in(this->arq, ios::in);
   queue = (Queue*)queue; // aqui pode dar merda
 
@@ -65,12 +65,12 @@ void Validator::work((void*) &queue){
 
     n = (unsigned int)stoi(line);
     if(this->isValid(n)){
-      pthread_mutex_lock(&mutex);
+      pthread_mutex_lock(&mtx);
       queue->add(n);
       if(queue->getSize() == 1){
         pthread_cond_signal(&condq);
       }
-      pthread_mutex_unlock(&mutex);
+      pthread_mutex_unlock(&mtx);
     }
 
   }

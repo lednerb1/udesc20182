@@ -8,7 +8,7 @@
 CC = g++
 
 # The CFLAGS variable sets compile flags for gcc:
-#  -g          compile with debug information
+#  -g          compile with debug informationre
 #  -Wall       give verbose compiler warnings
 #  -O0         do not optimize generated code
 #  -std=c++11  use the C++11 standard language definition
@@ -21,7 +21,7 @@ LDFLAGS = -lm
 # In this section, you list the files that are part of the project.
 # If you add/change names of source files, here is where you
 # edit the Makefile.
-SOURCES = Candidato.cpp Contador.cpp Validator.cpp utils.cpp Queue.cpp Main.cpp
+SOURCES = Main.cpp Candidato.cpp Contador.cpp Validator.cpp utils.cpp Queue.cpp
 OBJECTS = $(SOURCES:.cpp=.cpp)
 TARGET = demo
 
@@ -32,7 +32,7 @@ TARGET = demo
 # assume that it depends on all the named OBJECTS files.
 
 $(TARGET) : $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
+	reset && $(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
 
 # Phony means not a "real" target, it doesn't build anything
 # The phony target "clean" is used to remove all compiled object files.
