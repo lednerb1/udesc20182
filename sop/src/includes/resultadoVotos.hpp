@@ -1,5 +1,7 @@
-#include <bits/stdc++.h>
-#include "utils.hpp"
+#pragma once
+#include "Candidato.hpp"
+#include "Contador.hpp"
+
 using namespace std;
 
 class resultadoVotos{
@@ -10,4 +12,4 @@ private:
 public:
 	resultadoVotos();
 	void resultado();
-}
+};

@@ -15,10 +15,10 @@ void resultadoVotos::resultado(unsigned int number, vector<Candidato> &candidato
 	}
 
 	printf(fmtvoto, i.number, i.name, i.votos, (i.votos*100)/quantTotal);
-	cout << candidatos[i].number << "\t";
-	cout << candidatos[i].name << "\t\t";
-	cout << candidatos[i].votos << "\t";
-	cout << (candidatos[i].votos*100)/quantTotal << endl;
+	// cout << candidatos[i].number << "\t";
+	// cout << candidatos[i].name << "\t\t";
+	// cout << candidatos[i].votos << "\t";
+	// cout << (candidatos[i].votos*100)/quantTotal << endl;
 
 	}
 }

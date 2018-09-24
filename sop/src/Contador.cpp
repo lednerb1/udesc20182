@@ -123,5 +123,5 @@ vector<Candidato> Contador::apura(){
       }
     }
   }
-  return this->candidato;
+  return this->candidatos;
 }
