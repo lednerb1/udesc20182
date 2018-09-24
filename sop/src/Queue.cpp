@@ -26,6 +26,10 @@ unsigned int Queue::getNext(){
   return returner;
 }
 
+int Queue::getSize(){
+  return Queue::size;
+}
+
 void Queue::add(unsigned int n){
   //cerr << "add\n";
   if(this->isEmpty()){

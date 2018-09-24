@@ -15,4 +15,5 @@ public:
   void contabiliza_voto();
   void beta_adiciona_voto(unsigned int voto);
   void listVotes();
+  void work(void*);
 };

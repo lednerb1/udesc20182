@@ -1,4 +1,5 @@
 #include "includes/Validator.hpp"
+#include <pthread.h>
 #include <cstdio>
 
 using namespace std;
@@ -45,9 +46,9 @@ bool Validator::isValid(unsigned int n){
   return (this->candidates.find(n) != this->candidates.end());
 }
 
-void Validator::work(Queue* & queue){
-
+void Validator::work((void*) &queue){
   ifstream in(this->arq, ios::in);
+  queue = (Queue*)queue; // aqui pode dar merda
 
   //Avisa as demais Threads que esta pronto
   cout << this->arq << " Ready\n";
@@ -64,12 +65,19 @@ void Validator::work(Queue* & queue){
 
     n = (unsigned int)stoi(line);
     if(this->isValid(n)){
+      pthread_mutex_lock(&mutex);
       queue->add(n);
+      if(queue->getSize() == 1){
+        pthread_cond_signal(&condq);
+      }
+      pthread_mutex_unlock(&mutex);
     }
 
   }
 
+  pthread_barrier_wait(&barrier);
   //Avisa as demais Threads que terminou de
   //validar os votos referentes a seu arquivo
+
 
 }

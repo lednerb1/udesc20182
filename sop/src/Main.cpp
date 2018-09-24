@@ -8,6 +8,10 @@
 
 using namespace std;
 
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t emptyq = PTHREAD_COND_INITIALIZER;
+pthread_barrier_t barrier = PTHREAD_BARRIER_INITIALIZER;
+
 int main(int argc, const char * args[]){
 
   unsigned int ithreads = 0x3f3f3f3f;
@@ -40,6 +44,19 @@ int main(int argc, const char * args[]){
   for(auto s : files){
     cout << s << endl;
   }
+
+  if(pthread_mutex_init(&mutex, NULL)){
+      cerr << "Erro ao criar mutex\n";
+      exit(1);
+  }
+  if(pthread_cond_init(&emptyq, NULL)){
+    cerr << "Erro ao criar condq\n";
+    exit(1);
+  }
+  if(pthread_barrier_init(&barrier), NULL, ithreads){
+    cerr << "Erro ao criar barreira\n";
+    exit(1);
+  }
   /*
   Aqui deve ser inserido o codigo para iniciar as Threads
   Todas as Threads vao estar separadas executando seus pro
@@ -55,12 +72,22 @@ int main(int argc, const char * args[]){
   delete validator;
   //Contador deve avisar as demais Threads que esta pronto;
 
-  vector<Validator*> v(ithreads);
+  vector< pair<Validator*, int> > validators(ithreads);
+  vector<pthread_t> threads(ithreads);
 
   for(int i=1; i<=ithreads; i++){
     cout << "Creating Validator " << files[i] << endl;
-    v[i-1] = new Validator(files[i], i);
+    validators[i-1].first = new Validator(files[i], i);
+    validators[i-1].second = pthread_create(&threads[i], NULL, (void *)validators[i-1].first->work(), (void *) validators[i-1].first->work());
   }
+  bool quebrou = false;
+  for(int i=1; i<= threads; i++){
+      if(validators[i-1].second == 0){
+          cerr << "Erro na criação da thread " << i << endl;
+          quebrou = true;
+      }
+  }
+  if(quebrou) exit(1);
 
   for(auto& i : v){
     i->work(contador->queue);

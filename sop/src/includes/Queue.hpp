@@ -17,6 +17,7 @@ private:
 public:
   Queue();
   unsigned int getNext();
+  unsigned int getSize();
   void add(unsigned int n);
   bool isEmpty();
 

@@ -56,21 +56,37 @@ Contador::Contador(string filename){
 
 }
 
-void Contador::contabiliza_voto(){
-  // cerr << "here\n";
-  int candidate = this->queue->getNext();
+void Contador::work(void *sla_meu_batman){
+  while(true){
+    int candidate;
+    //Semaforo pra ver se tem elemento na fila
+    pthread_mutex_lock(&mutex);
+    if(this->queue->isEmpty()){
+      pthread_cond_wait(&condq, &mutex);
+    }
+    candidate = this->queue->getNext();
+    pthread_mutex_unlock(&mutex);
+    this->contabiliza_voto(candidate);
+  }
+
+  pthread_exit(NULL);
+
+}
+
+void Contador::contabiliza_voto(int voto){
+
   if(candidate != -1){
     this->votos.find(candidate)->second++;
     cout << "Queue--\n";
-    }
-  else
+  }else{
     cout << "Queue is empty, wait for more data\n";
-  // cerr << "passed\n";
+  }
+
 }
 
 void Contador::beta_adiciona_voto(unsigned int voto){
-  cout << "Queue++\n";
-  this->queue->add(voto);
+  //cout << "Queue++\n";
+  //this->queue->add(voto);
 }
 
 void Contador::listVotes(){
