@@ -2,6 +2,7 @@
 #include "includes/utils.hpp"
 #include "includes/Contador.hpp"
 #include "includes/Validator.hpp"
+#include "includes/resultadoVotos.hpp"
 #include <pthread.h>
 #include <cstdlib>
 #include <vector>
@@ -103,8 +104,11 @@ int main(int argc, const char * args[]){
   for(unsigned int i=0; i<=ithreads; i++){
     pthread_join(threads[i], NULL);
   }
+  // cout << "Tamanho maximo da fila " << contador->queue->getMax() << endl;
+  contador->apura();
 
-  contador->listVotes();
+  resultadoVotos * resultados = new resultadoVotos();
+
 
   return 0;
 }

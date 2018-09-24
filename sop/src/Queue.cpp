@@ -48,9 +48,14 @@ void Queue::add(unsigned int n){
     last = &((*last)->next);
     size++;
   }
+  maxSize = max(size, maxSize);
   // cerr << "hmm\n";
 }
 
 bool Queue::isEmpty(){
   return size == 0;
+}
+
+unsigned int Queue::getMax(){
+  return Queue::maxSize;
 }

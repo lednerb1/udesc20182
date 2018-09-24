@@ -6,7 +6,7 @@
 
 class Contador {
 private:
-  static std::map<int,int> votos;
+  static std::map<int,int> votos; // map<numero_candidato,qtd_votos>
   std::vector<Candidato> candidatos;
   static bool done;
 public:
@@ -14,9 +14,10 @@ public:
   Contador(std::string);
   static void contabiliza_voto(unsigned int);
   void beta_adiciona_voto(unsigned int voto);
-  void listVotes();
   static void * work(void*);
   static void setDone(bool);
   static bool isDone();
+  std::vector<Candidato> apura();
+  // static std::vector<Candidato> candidatos;
 
 };

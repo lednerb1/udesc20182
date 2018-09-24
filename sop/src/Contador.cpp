@@ -114,8 +114,14 @@ void Contador::beta_adiciona_voto(unsigned int voto){
   //this->queue->add(voto);
 }
 
-void Contador::listVotes(){
-  for(auto& i : votos){
-    cout << i.first << ": " << i.second << endl;
+vector<Candidato> Contador::apura(){
+  for(auto v : votos){
+    for(auto& c : this->candidatos){
+      if(c->getNumber() == v->first){
+        c->insereVotos(v->first);
+        break;
+      }
+    }
   }
+  return this->candidato;
 }

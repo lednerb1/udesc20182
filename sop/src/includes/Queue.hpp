@@ -20,5 +20,6 @@ public:
   unsigned int getSize();
   void add(unsigned int n);
   bool isEmpty();
+  static unsigned int getMax();
 
 };
