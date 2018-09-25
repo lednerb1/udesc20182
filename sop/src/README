@@ -1,0 +1,17 @@
+Instruções para uso
+
+Compilação:
+
+$ make
+
+
+Execução:
+
+$ ./build nmr_thr path
+
+-- nmr_thr é o numero de threads
+-- path é o caminho para o arquivo de entrada principal
+
+Ex: $ ./build 10 IOs/g
+
+

@@ -19,3 +19,4 @@ typedef struct data{
 #define fmtvoto "%8u  %-30s  %13u  %6.2f\n"
 
 bool getFiles(vector<string>& files, const char * name, const char * nthr, unsigned int ithr);
+bool isNumber(string str);

@@ -1,3 +1,28 @@
+/**
+*
+* Universidade do Estado de Santa Catarina - UDESC
+* Campus CCT
+* Departamento de Ciência da Computação
+* Disciplina de Sistemas Operacionais
+* Professor Rafael Obelheiro
+*
+* Apurador de Votos Multithreading
+*
+* @Authors
+* Peter L. Brendel
+* Guilherme M. Utiama
+*
+* Comentários dos autores:
+*
+* Nos arrependemos de ter feito em C++
+* Algo que era para simplificar apenas
+* nos trouxe mais dor e sofrimento.
+*
+* Estamos chorando, mas conseguimos.
+*
+*
+**/
+
 #include "includes/utils.hpp"
 #include "includes/Contador.hpp"
 #include "includes/Validator.hpp"
@@ -23,22 +48,26 @@ int main(int argc, const char * args[]){
     case 1:
     case 2:
     cerr << "Usage: $ " << args[0] << " num_threads path_to_files\nAborting\n";
-    return 1;
+    exit(EXIT_FAILURE);
 
     case 3:
     nthreads = args[1];
     filename = args[2];
+    if(!isNumber(nthreads)){
+      cerr << "First argument must be a number\nAborting\n";
+      exit(EXIT_FAILURE);
+    }
     sscanf(nthreads, "%u", &ithreads);
     if(!getFiles(files, filename, nthreads, ithreads)){
       cerr << "Could not generate filenames properly\nAborting\n";
-      return 2;
+      exit(EXIT_FAILURE);
     }
     break;
   }
 
   if(ithreads == 0x3f3f3f3f or filename == NULL){
     cerr << "Error on reading arguments\nAborting\n";
-    return 3;
+    exit(EXIT_FAILURE);
   }
 
   for(auto s : files){
@@ -47,19 +76,19 @@ int main(int argc, const char * args[]){
 
   if(pthread_mutex_init(&mtx, NULL)){
       cerr << "Erro ao criar mutex\n";
-      exit(1);
+      exit(EXIT_FAILURE);
   }
   if(pthread_cond_init(&emptyq, NULL)){
     cerr << "Erro ao criar condq\n";
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   if(pthread_barrier_init(&barrier_init, NULL, ithreads+1)){
     cerr << "Erro ao criar barreira_init\n";
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   if(pthread_barrier_init(&barrier_end, NULL, ithreads)){
     cerr << "Erro ao criar barreira_end\n";
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   /*
   Aqui deve ser inserido o codigo para iniciar as Threads

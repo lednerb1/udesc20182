@@ -74,14 +74,14 @@ void * Validator::work(void* data){
     if(!in.good())
       break;
 
-    bool flag = true;
-    for(char c : line){
-      if((c < '0' or c > '9') and c != ' '){
-        n = 0x3f3f3f3f;
-        flag = false;
-        break;
-      }
-    }
+    bool flag = isNumber(line);
+    // for(char c : line){
+    //   if((c < '0' or c > '9') and c != ' '){
+    //     n = 0x3f3f3f3f;
+    //     flag = false;
+    //     break;
+    //   }
+    // }
 
     if(!flag){
       pthread_mutex_lock(&mtx);

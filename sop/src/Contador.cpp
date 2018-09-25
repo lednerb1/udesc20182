@@ -32,11 +32,11 @@ Contador::Contador(string filename){
     if(!in.good())
       break;
     int sz = (int)line.size();
-    //cout << "READ: " << line << endl;
+    //cerr << "READ: " << line << endl;
     for(int i=0; i<sz; i++){
       if(line[i] == ' ' and number == 0x3f3f3f3f){
         while(line[i] == ' ')i++;
-        //cout << "NUMBER: " << aux << endl;
+        //cerr << "NUMBER: " << aux << endl;
         number = stoi(aux);
         aux = "";
       }

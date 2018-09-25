@@ -19,7 +19,7 @@ CFLAGS = -g -Wall -O0 -std=c++11 -pthread
 # edit the Makefile.
 SOURCES = Main.cpp Candidato.cpp Contador.cpp Validator.cpp utils.cpp Queue.cpp ResultadoVotos.cpp
 OBJECTS = $(SOURCES:.cpp=.cpp)
-TARGET = demo
+TARGET = build
 
 
 # The first target defined in the makefile is the one
