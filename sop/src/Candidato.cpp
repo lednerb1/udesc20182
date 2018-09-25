@@ -14,6 +14,10 @@ unsigned int Candidato::getNumber(){
     return this->number;
 }
 
+unsigned int Candidato::getVotos(){
+  return this->votos;
+}
+
 void Candidato::insereVotos(unsigned int votos){
   this->votos = votos;
 }

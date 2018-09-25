@@ -7,7 +7,7 @@
 
 class Contador {
 private:
-  static std::map<int,int> votos; // map<numero_candidato,qtd_votos>
+  static std::map<unsigned int,unsigned int> votos; // map<numero_candidato,qtd_votos>
   std::vector<Candidato> candidatos;
   static bool done;
 public:

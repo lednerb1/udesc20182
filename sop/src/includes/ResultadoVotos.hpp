@@ -1,15 +1,15 @@
 #pragma once
 #include "Candidato.hpp"
 #include "Contador.hpp"
+#include "utils.hpp"
 
 using namespace std;
 
-class resultadoVotos{
+class ResultadoVotos{
 
 private:
 	double votos;
 
 public:
-	resultadoVotos();
-	void resultado();
+	void resultado(vector<Candidato>&);
 };

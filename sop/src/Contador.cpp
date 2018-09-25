@@ -7,7 +7,7 @@
 
 using namespace std;
 
-map<int,int> Contador::votos;
+map<unsigned int,unsigned int> Contador::votos;
 Queue * Contador::queue;
 bool Contador::done = false;
 
@@ -114,14 +114,20 @@ void Contador::beta_adiciona_voto(unsigned int voto){
   //this->queue->add(voto);
 }
 
+bool comp(Candidato& a, Candidato& b){
+  return a.getVotos() > b.getVotos();
+}
+
 vector<Candidato> Contador::apura(){
   for(auto v : votos){
     for(auto& c : this->candidatos){
-      if(c->getNumber() == v->first){
-        c->insereVotos(v->first);
+      if(c.getNumber() == v.first){
+        c.insereVotos(v.second);
+        cout << v.second << endl;
         break;
       }
     }
   }
+  sort(this->candidatos.begin(), this->candidatos.end(), comp);
   return this->candidatos;
 }

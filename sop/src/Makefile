@@ -17,7 +17,7 @@ CFLAGS = -g -Wall -O0 -std=c++11 -pthread
 # In this section, you list the files that are part of the project.
 # If you add/change names of source files, here is where you
 # edit the Makefile.
-SOURCES = Main.cpp Candidato.cpp Contador.cpp Validator.cpp utils.cpp Queue.cpp
+SOURCES = Main.cpp Candidato.cpp Contador.cpp Validator.cpp utils.cpp Queue.cpp ResultadoVotos.cpp
 OBJECTS = $(SOURCES:.cpp=.cpp)
 TARGET = demo
 
