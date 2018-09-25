@@ -11,6 +11,8 @@ private:
     unsigned int threadId;
     std::string arq; //Arquivo de votos !!
 public:
+    static unsigned int lidos;
+    static unsigned int validos;
     Validator(std::string arquivo);
     Validator(std::string arquivo, unsigned int ithread);
     static bool isValid(unsigned int n);

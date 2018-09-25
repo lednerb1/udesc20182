@@ -2,6 +2,7 @@
 #include "Candidato.hpp"
 #include "Contador.hpp"
 #include "utils.hpp"
+#include "cstdio"
 
 using namespace std;
 
@@ -11,5 +12,5 @@ private:
 	double votos;
 
 public:
-	void resultado(vector<Candidato>&);
+	void resultado(vector<Candidato>&, unsigned int, unsigned int, unsigned int, string, string);
 };

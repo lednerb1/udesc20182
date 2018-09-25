@@ -9,6 +9,8 @@
 using namespace std;
 
 set<unsigned int> Validator::candidates;
+unsigned int Validator::lidos;
+unsigned int Validator::validos;
 
 Validator::Validator(string arq){
 
@@ -32,7 +34,7 @@ Validator::Validator(string arq){
     // cout << " = " << candidate << endl;
     if(candidate != 0x3f3f3f3f){
       candidates.insert(candidate);
-      cout << "insert: " << candidate << endl;
+      // cout << "insert: " << candidate << endl;
     }else{
       break;
     }
@@ -68,27 +70,48 @@ void * Validator::work(void* data){
     string line;
 
     getline(in,line);
-
+    cout << "line: " << line << endl;
     if(!in.good())
       break;
 
-    n = (unsigned int)stoi(line);
-    if(Validator::isValid(n)){
+    bool flag = true;
+    for(char c : line){
+      if((c < '0' or c > '9') and c != ' '){
+        n = 0x3f3f3f3f;
+        flag = false;
+        break;
+      }
+    }
+
+    if(!flag){
       pthread_mutex_lock(&mtx);
-      printf("adding %d\n", n);
-      (*queue)->add(n);
-      if((*queue)->getSize() == 1){
-        pthread_cond_signal(&emptyq);
+      Validator::lidos++;
+      cout << "nao enfileirou " << line << endl ;
+      pthread_mutex_unlock(&mtx);
+    }else{
+      n = (unsigned int)stoi(line);
+      bool valid = Validator::isValid(n);
+      pthread_mutex_lock(&mtx);
+      if(valid){
+        Validator::lidos++;
+        Validator::validos++;
+        (*queue)->add(n);
+        printf("adding %d\nSize %d\n", n, (*queue)->getSize());
+        if((*queue)->getSize() <= 1){
+          pthread_cond_signal(&emptyq);
+        }
+      }else{
+        Validator::lidos++;
       }
       pthread_mutex_unlock(&mtx);
     }
-
   }
-
+  cout << "ended " << arq << endl;
   pthread_barrier_wait(&barrier_end);
+  Contador::setDone(true);
+  pthread_cond_signal(&emptyq);
   //Avisa as demais Threads que terminou de
   //validar os votos referentes a seu arquivo
-  Contador::setDone(true);
   pthread_exit(NULL);
 }
 

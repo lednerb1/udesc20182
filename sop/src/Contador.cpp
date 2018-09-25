@@ -97,8 +97,10 @@ void * Contador::work(void *sla_meu_batman){
       if(Contador::isDone()){
         pthread_mutex_unlock(&mtx);
         break;
+      }else{
+        cout << "Waiting, empty queue : " << Contador::queue->getSize() << endl;
+        pthread_cond_wait(&emptyq, &mtx);
       }
-      pthread_cond_wait(&emptyq, &mtx);
     }
     candidate = Contador::queue->getNext();
     printf("removing %u\n", candidate);
@@ -107,11 +109,6 @@ void * Contador::work(void *sla_meu_batman){
   }
 
   pthread_exit(NULL);
-}
-
-void Contador::beta_adiciona_voto(unsigned int voto){
-  //cout << "Queue++\n";
-  //this->queue->add(voto);
 }
 
 bool comp(Candidato& a, Candidato& b){

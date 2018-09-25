@@ -14,7 +14,6 @@ public:
   static Queue * queue;
   Contador(std::string);
   static void contabiliza_voto(unsigned int);
-  void beta_adiciona_voto(unsigned int voto);
   static void * work(void*);
   static void setDone(bool);
   static bool isDone();

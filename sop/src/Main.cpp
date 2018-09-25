@@ -1,4 +1,3 @@
-//#include <bits/stdc++.h>
 #include "includes/utils.hpp"
 #include "includes/Contador.hpp"
 #include "includes/Validator.hpp"
@@ -10,7 +9,6 @@
 pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t emptyq = PTHREAD_COND_INITIALIZER;
 pthread_barrier_t barrier_init, barrier_end;
-
 
 using namespace std;
 
@@ -107,8 +105,17 @@ int main(int argc, const char * args[]){
   // cout << "Tamanho maximo da fila " << contador->queue->getMax() << endl;
   vector<Candidato> temp = contador->apura();
   ResultadoVotos * resultados = new ResultadoVotos();
+  unsigned int lidos, validos, max;
+  lidos = Validator::lidos;
+  validos = Validator::validos;
+  max = Queue::getMax();
 
-  resultados->resultado(temp);
+  system("clear");
+  resultados->resultado(temp, lidos, validos, max, files[0], nthreads);
 
+
+  cout << "\nCalculo finalizado com sucesso\nVerifique a saida gerada em " << files[0] << "_saida_" << nthreads << endl;
+  cout << "Pressione qualquer botao para continuar.\n";
+  getchar();
   return 0;
 }
