@@ -1,25 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.udesc.gui;
 
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import br.udesc.files.FileManager;
 
 /**
  *
- * @author udesc
+ * @author Guilherme Utiama
+ * @author Peter Brendel
  */
 public class main extends javax.swing.JFrame {
     
-    ArrayList<File> files;
+    FileManager fileManager;
     
     public main() {
         initComponents();
-        files = new ArrayList<>();
+        fileManager = new FileManager();
     }
 
     /**
@@ -64,18 +61,12 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void carregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carregarActionPerformed
+        
         seletor_arquivos.setMultiSelectionEnabled(true);
         int returnV = seletor_arquivos.showOpenDialog(carregar);
+        
         if(returnV == JFileChooser.APPROVE_OPTION){
-            File[] tmp = seletor_arquivos.getSelectedFiles();
-            for(int i=0; i<tmp.length; i++){
-                if(tmp[i].getName().endsWith(".txt")){
-                    files.add(tmp[i]);  // Deu
-                }
-            }
-        }
-        for(File f : files){
-            System.out.println(f.getName());
+            fileManager.readFiles(seletor_arquivos.getSelectedFiles());
         }
         
     }//GEN-LAST:event_carregarActionPerformed
