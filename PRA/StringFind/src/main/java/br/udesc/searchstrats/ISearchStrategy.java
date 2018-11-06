@@ -1,5 +1,7 @@
 package br.udesc.searchstrats;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Guilherme Utiama
@@ -11,5 +13,5 @@ public interface ISearchStrategy {
         /* */
     }
     
-    public abstract WordLocation search();
+    public abstract ArrayList<WordLocation> search();
 }

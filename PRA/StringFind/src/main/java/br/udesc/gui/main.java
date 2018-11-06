@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import br.udesc.files.FileManager;
+import br.udesc.searchstrats.FactorySearch;
+import br.udesc.searchstrats.WordLocation;
 
 /**
  *
@@ -13,10 +15,12 @@ import br.udesc.files.FileManager;
 public class main extends javax.swing.JFrame {
     
     FileManager fileManager;
+    FactorySearch factory;
     
     public main() {
         initComponents();
         fileManager = new FileManager();
+        factory = new FactorySearch();
     }
 
     /**
@@ -29,9 +33,28 @@ public class main extends javax.swing.JFrame {
     private void initComponents() {
 
         seletor_arquivos = new javax.swing.JFileChooser();
+        toFind = new javax.swing.JTextField();
+        dropdown = new javax.swing.JComboBox<>();
+        buscar = new javax.swing.JButton();
         carregar = new javax.swing.JButton();
+        painelTexto = new javax.swing.JScrollPane();
+        areaTexto = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        dropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Naive Search", "Item 2", "Item 3", "Item 4" }));
+        dropdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dropdownActionPerformed(evt);
+            }
+        });
+
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
 
         carregar.setText("Carregar arquivos");
         carregar.addActionListener(new java.awt.event.ActionListener() {
@@ -40,21 +63,42 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        areaTexto.setColumns(20);
+        areaTexto.setRows(5);
+        painelTexto.setViewportView(areaTexto);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(carregar)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(painelTexto)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(carregar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                        .addComponent(dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(toFind)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(carregar)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(carregar)
+                    .addComponent(dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buscar)
+                    .addComponent(toFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(painelTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -70,6 +114,31 @@ public class main extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_carregarActionPerformed
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        
+        Object o = dropdown.getSelectedItem();
+        areaTexto.setText("");
+        
+        if(o.toString().equals("Naive Search")){
+            String toSearch = toFind.getText();
+            if(toSearch != null){
+                for(File f : fileManager.getFiles()){
+                    areaTexto.append(f.getName() + "\n");
+                    ArrayList<WordLocation> temp = factory.naive(f, toSearch).search();
+                    for(WordLocation w : temp){
+                        areaTexto.append(w.toString() + "\n");
+                    }
+                }
+            }
+        }
+        
+        
+    }//GEN-LAST:event_buscarActionPerformed
+
+    private void dropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropdownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dropdownActionPerformed
 
     /**
      * @param args the command line arguments
@@ -107,8 +176,13 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea areaTexto;
+    private javax.swing.JButton buscar;
     private javax.swing.JButton carregar;
+    private javax.swing.JComboBox<String> dropdown;
+    private javax.swing.JScrollPane painelTexto;
     private javax.swing.JFileChooser seletor_arquivos;
+    private javax.swing.JTextField toFind;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -6,20 +6,19 @@
 package br.udesc.files;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
  * @author udesc
  */
 public class FileManager {
-    private ArrayList<File> files;
+    private Set<File> files;
     
     public FileManager(){
-        files = new ArrayList<>();
     }
     
-    public ArrayList<File> getFiles(){
+    public Set<File> getFiles(){
         return files;
     }
     

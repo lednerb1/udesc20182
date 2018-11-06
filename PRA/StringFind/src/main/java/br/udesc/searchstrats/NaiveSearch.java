@@ -56,30 +56,29 @@ public class NaiveSearch implements ISearchStrategy {
     }
     
     @Override
-    public WordLocation search() {
-        WordLocation returner = new WordLocation(word);
-        
+    public ArrayList<WordLocation> search() {
+        ArrayList<WordLocation> returner = new ArrayList<>();
         long init = System.currentTimeMillis();
         int l=0;
         int c=0;
+        
         // Logica Naive
         for(String[] arr : temp){
             c=0;
             for(int i=0; i<arr.length; i++){
                 if(arr[i].equals(word)){
                     long end = System.currentTimeMillis();
-                    returner.setTime(init-end);
-                    returner.setLine(l);
-                    returner.setColumn(c+2);
+                    WordLocation temp = new WordLocation(word);
+                    temp.setTime(end-init);
+                    temp.setLine(l+1);
+                    temp.setColumn(c+1);
+                    returner.add(temp);
+                    init = System.currentTimeMillis();
                 }else{
                     c += arr[i].length();
                 }
             }
             l++;
-        }
-        
-        if(returner.getTime() == 0){
-            return null;
         }
         
         return returner;
