@@ -46,9 +46,9 @@ Grafo::setArestas(){
   for(auto& v : this->vertices){
     for(auto& vv : this->vertices){
       if(&v != &vv){
-        double distancia = v ^ vv;        // Operador de Vertices que calcula a distancia.
-        v.adj.insert({distancia, vv.idx});// Inserimos de maneira ordenada pelo set.
-        v.adj.erase(--v.adj.end());       // Como o maior elemento sempre vai na ultima posicao, removemos ele.
+        double distancia = v ^ vv;         // Operador de Vertices que calcula a distancia.
+        v.adj.insert({distancia, vv.idx}); // Inserimos de maneira ordenada pelo set.
+        v.adj.erase(--v.adj.end());        // Como o maior elemento sempre vai na ultima posicao, removemos ele.
       }
     }
   }
