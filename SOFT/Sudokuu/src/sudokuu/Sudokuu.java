@@ -1,202 +1,192 @@
-/* Java program for Sudoku generator */
-import java.lang.*; 
+package sudokuu;
 
-public class Sudokuu
-{ 
-	int[] mat[]; 
-	int N; // number of columns/rows. 
-	int SRN; // square root of N 
-	int K; // No. Of missing digits 
+import java.lang.*;
+import java.util.Random;
 
-	// Constructor 
-	Sudokuu(int N, int K) 
-	{ 
-		this.N = N; 
-		this.K = K; 
+public class Sudokuu {
 
-		// Compute square root of N 
-		Double SRNd = Math.sqrt(N); 
-		SRN = SRNd.intValue(); 
+    int[] mat[];
+    int N; // number of columns/rows. 
+    int SRN; // square root of N 
+    int K; // No. Of missing digits 
 
-		mat = new int[N][N]; 
-	} 
+    // Constructor 
+    Sudokuu(int N, int K) {
+        this.N = N;
+        this.K = K;
 
-	// Sudoku Generator 
-	public void fillValues() 
-	{ 
-		// Fill the diagonal of SRN x SRN matrices 
-		fillDiagonal(); 
+        // Compute square root of N 
+        Double SRNd = Math.sqrt(N);
+        SRN = SRNd.intValue();
 
-		// Fill remaining blocks 
-		fillRemaining(0, SRN); 
+        mat = new int[N][N];
+    }
 
-		// Remove Randomly K digits to make game 
-		removeKDigits(); 
-	} 
+    // Sudoku Generator 
+    public void fillValues() {
+        // Fill the diagonal of SRN x SRN matrices 
+        fillDiagonal();
 
-	// Fill the diagonal SRN number of SRN x SRN matrices 
-	void fillDiagonal() 
-	{ 
+        // Fill remaining blocks 
+        fillRemaining(0, SRN);
 
-		for (int i = 0; i<N; i=i+SRN) 
+        // Remove Randomly K digits to make game
+        printSudoku();
+        removeKDigits();
+    }
 
-			// for diagonal box, start coordinates->i==j 
-			fillBox(i, i); 
-	} 
+    // Fill the diagonal SRN number of SRN x SRN matrices 
+    void fillDiagonal() {
 
-	// Returns false if given 3 x 3 block contains num. 
-	boolean unUsedInBox(int rowStart, int colStart, int num) 
-	{ 
-		for (int i = 0; i<SRN; i++) 
-			for (int j = 0; j<SRN; j++) 
-				if (mat[rowStart+i][colStart+j]==num) 
-					return false; 
+        for (int i = 0; i < N; i = i + SRN) // for diagonal box, start coordinates->i==j 
+        {
+            fillBox(i, i);
+        }
+    }
 
-		return true; 
-	} 
+    // Returns false if given 3 x 3 block contains num. 
+    boolean unUsedInBox(int rowStart, int colStart, int num) {
+        for (int i = 0; i < SRN; i++) {
+            for (int j = 0; j < SRN; j++) {
+                if (mat[rowStart + i][colStart + j] == num) {
+                    return false;
+                }
+            }
+        }
 
-	// Fill a 3 x 3 matrix. 
-	void fillBox(int row,int col) 
-	{ 
-		int num; 
-		for (int i=0; i<SRN; i++) 
-		{ 
-			for (int j=0; j<SRN; j++) 
-			{ 
-				do
-				{ 
-					num = randomGenerator(N); 
-				} 
-				while (!unUsedInBox(row, col, num)); 
+        return true;
+    }
 
-				mat[row+i][col+j] = num; 
-			} 
-		} 
-	} 
+    // Fill a 3 x 3 matrix. 
+    void fillBox(int row, int col) {
+        int num;
+        for (int i = 0; i < SRN; i++) {
+            for (int j = 0; j < SRN; j++) {
+                do {
+                    num = randomGenerator(N);
+                } while (!unUsedInBox(row, col, num));
 
-	// Random generator 
-	int randomGenerator(int num) 
-	{ 
-		return (int) Math.floor((Math.random()*num+1)); 
-	} 
+                mat[row + i][col + j] = num;
+            }
+        }
+    }
 
-	// Check if safe to put in cell 
-	boolean CheckIfSafe(int i,int j,int num) 
-	{ 
-		return (unUsedInRow(i, num) && 
-				unUsedInCol(j, num) && 
-				unUsedInBox(i-i%SRN, j-j%SRN, num)); 
-	} 
+    // Random generator 
+    int randomGenerator(int num) {
+        return (int) Math.floor((Math.random() * num + 1));
+    }
 
-	// check in the row for existence 
-	boolean unUsedInRow(int i,int num) 
-	{ 
-		for (int j = 0; j<N; j++) 
-		if (mat[i][j] == num) 
-				return false; 
-		return true; 
-	} 
+    // Check if safe to put in cell 
+    boolean CheckIfSafe(int i, int j, int num) {
+        return (unUsedInRow(i, num)
+                && unUsedInCol(j, num)
+                && unUsedInBox(i - i % SRN, j - j % SRN, num));
+    }
 
-	// check in the row for existence 
-	boolean unUsedInCol(int j,int num) 
-	{ 
-		for (int i = 0; i<N; i++) 
-			if (mat[i][j] == num) 
-				return false; 
-		return true; 
-	} 
+    // check in the row for existence 
+    boolean unUsedInRow(int i, int num) {
+        for (int j = 0; j < N; j++) {
+            if (mat[i][j] == num) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	// A recursive function to fill remaining 
-	// matrix 
-	boolean fillRemaining(int i, int j) 
-	{ 
-		// System.out.println(i+" "+j); 
-		if (j>=N && i<N-1) 
-		{ 
-			i = i + 1; 
-			j = 0; 
-		} 
-		if (i>=N && j>=N) 
-			return true; 
+    // check in the row for existence 
+    boolean unUsedInCol(int j, int num) {
+        for (int i = 0; i < N; i++) {
+            if (mat[i][j] == num) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-		if (i < SRN) 
-		{ 
-			if (j < SRN) 
-				j = SRN; 
-		} 
-		else if (i < N-SRN) 
-		{ 
-			if (j==(int)(i/SRN)*SRN) 
-				j = j + SRN; 
-		} 
-		else
-		{ 
-			if (j == N-SRN) 
-			{ 
-				i = i + 1; 
-				j = 0; 
-				if (i>=N) 
-					return true; 
-			} 
-		} 
+    // A recursive function to fill remaining 
+    // matrix 
+    boolean fillRemaining(int i, int j) { 
+        System.out.println("1 - " + i + " " + j);
+        if (j >= N && i < N - 1) {
+            i = i + 1;
+            j = 0;
+            System.out.println("entrou");
+            for(int m=0; i<N; i++){
+                for(int n=0; n<N; n++)
+                    System.out.print(mat[m][n] + " ");
+                System.out.println();
+            }
+        }
+        if (i >= N && j >= N) {
+            return true;
+        }
 
-		for (int num = 1; num<=N; num++) 
-		{ 
-			if (CheckIfSafe(i, j, num)) 
-			{ 
-				mat[i][j] = num; 
-				if (fillRemaining(i, j+1)) 
-					return true; 
+        if (i < SRN) {
+            if (j < SRN) {
+                j = SRN;
+            }
+        } else if (i < N - SRN) {
+            if (j == (int) (i / SRN) * SRN) {
+                j = j + SRN;
+            }
+        } else {
+            if (j == N - SRN) {
+                i = i + 1;
+                j = 0;
+                if (i >= N) {
+                    return true;
+                }
+            }
+        }
+        System.out.println("2- " + i + " " + j);
+        for (int num = 1; num <= N; num++) {
+            if (CheckIfSafe(i, j, num)) {
+                mat[i][j] = num;
+                System.out.println("---> "+mat[i][j]);
+                if (fillRemaining(i, j + 1)) {
+                    return true;
+                }
 
-				mat[i][j] = 0; 
-			} 
-		} 
-		return false; 
-	} 
+                mat[i][j] = 0;
+            }
+        }
+        return false;
+    }
 
-	// Remove the K no. of digits to 
-	// complete game 
-	public void removeKDigits() 
-	{ 
-		int count = K; 
-		while (count != 0) 
-		{ 
-			int cellId = randomGenerator(N*N); 
+    // Remove the K no. of digits to 
+    // complete game 
+    public void removeKDigits() {
+        int count = K;
+        Random r = new Random();
+        while (count != 0) {
+            int i = r.nextInt(N);
+            int j = r.nextInt(N);
+            if(mat[i][j] != 0){
+                mat[i][j] = 0;
+                count--;
+            }
+        }
+    }
 
-			// System.out.println(cellId); 
-			// extract coordinates i and j 
-			int i = (cellId/N); 
-			int j = cellId%9; 
-			if (j != 0) 
-				j = j - 1; 
+    // Print sudoku 
+    public void printSudoku() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if(mat[i][j] != 0)
+                    System.out.print(mat[i][j] + " ");
+                else
+                    System.out.print("_ ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 
-			// System.out.println(i+" "+j); 
-			if (mat[i][j] != 0) 
-			{ 
-				count--; 
-				mat[i][j] = 0; 
-			} 
-		} 
-	} 
-
-	// Print sudoku 
-	public void printSudoku() 
-	{ 
-		for (int i = 0; i<N; i++) 
-		{ 
-			for (int j = 0; j<N; j++) 
-				System.out.print(mat[i][j] + " "); 
-			System.out.println(); 
-		} 
-		System.out.println(); 
-	} 
-
-	// Driver code 
-	public static void main(String[] args) 
-	{ 
-		int N = 25, K = 20; 
-		Sudokuu sudoku = new Sudokuu(N, K); 
-		sudoku.fillValues(); 
-		sudoku.printSudoku(); 
-	} 
-} 
+    // Driver code 
+    public static void main(String[] args) {
+        int N = 9, K = 1;
+        Sudokuu sudoku = new Sudokuu(N, K);
+        sudoku.fillValues();
+        sudoku.printSudoku();
+    }
+}
