@@ -3,8 +3,8 @@
 Grafo::Grafo(int v){
   this->v = v;
   string aux = to_string((int)ceil(log10(v)));
-  this->printArgAdj = "(%" + aux + "d,%.3lf)";
-  this->printArgVer = "%"  + aux + "d: (%.3lf,%.3lf) -> [";
+  this->printArgVer = "%"  + aux + "d,%.3lf,%.3lf";
+  this->printArgAdj = ",%" + aux + "d,%.3lf";
   Vertice vert;
 
   set<pair<double,int>> temp;
@@ -25,21 +25,23 @@ Grafo::printVertices(){
     for(auto a : v.adj){
       printf(this->printArgAdj.c_str(), a.second, a.first);
       }
-      printf("]\n");
     }
   }
 
 Grafo::printVerticesjs(){
+  FILE * output = fopen("../graph.csv", "w");
+  fprintf(output,"nodeIndex,nodeX,nodeY,adj1,dist1,adj2,dist2,adj3,dist3\n");
   for(auto v : this->vertices){
-    printf(this->printArgVer.c_str(), v.idx, v.x, v.y);
+    fprintf(output,this->printArgVer.c_str(), v.idx, v.x, v.y);
     for(auto a : v.adj){
-      printf(this->printArgAdj.c_str(), a.second, a.first);
-      if(v.adj.find(a) != (--v.adj.end())){
-        printf(", ");
-      }
+      fprintf(output,this->printArgAdj.c_str(), a.second, a.first);
+      // if(v.adj.find(a) != (--v.adj.end())){
+      //   printf(", ");
+      // }
     }
-    printf("]\n");
+    fprintf(output,"\n");
   }
+  fclose(output);
 }
 
 Grafo::setArestas(){
@@ -52,4 +54,39 @@ Grafo::setArestas(){
       }
     }
   }
+
+}
+
+Grafo::bfs(){
+  srand(time(NULL));
+  int i = rand() % this->v;
+  queue<int> q;
+  q.push(i);
+  int see[this->v+10];
+  int seen=0;
+  int k=0;
+  memset(see, 0, sizeof see);
+  while(seen < this->v){
+    while(!q.empty()){
+      int i = q.front(); q.pop();
+      see[i] = 1;
+      seen++;
+      printf("%d : ", i);
+      for(auto v : this->vertices[i].adj){
+        if(!see[v.second]){
+          printf("- %d ", v.second);
+          q.push(v.second);
+          see[v.second] = 1;
+        }
+      }cout << endl;
+    }
+    for(; k<this->v; k++){
+        if(!see[k]){
+          cout << "\nNew component\n";
+          q.push(k);
+          break;
+        }
+    }
+  }
+
 }

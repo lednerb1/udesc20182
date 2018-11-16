@@ -7,4 +7,6 @@ int main(){
   Grafo * graph = new Grafo(n);
   graph->setArestas();
   graph->printVerticesjs();
+  // graph->bfs();
+  // graph->directedBfs();
 }

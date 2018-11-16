@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head style="background-color:black;">
+    <style> body{padding:0; margin:0;} </style>
+    <script src="js/p5.js"></script>
+    <script src="js/addons/p5.dom.js"></script>
+    <script src="js/addons/p5.sound.js"></script>
+    <script src="js/addons/papaparse.min.js"></script>
+    <script src="js/core/Node.js"></script>
+    <script src="js/core/sketch.js"></script>
+  </head>
+  <body style="background-color:white">
+
+  <input type="file" id="files" name="files[]" align="right" />
+  <output id="list"></output>
+  <script>
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  </script>
+
+  </body>
+</html>

@@ -26,4 +26,5 @@ public:
   printVertices();
   printVerticesjs();
   setArestas();
+  bfs();
 };
