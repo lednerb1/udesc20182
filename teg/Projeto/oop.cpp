@@ -6,6 +6,7 @@ int main(){
   int n; cin >> n;
   Grafo * graph = new Grafo(n);
   graph->setArestas();
+  //graph->printVertices();
   graph->printVerticesjs();
   // graph->bfs();
   // graph->directedBfs();

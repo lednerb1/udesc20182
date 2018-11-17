@@ -6,21 +6,31 @@ class Node {
     this.adj = [];
     this.visited = false;
     this.fillValue = 255;
+    Node.strkw = 5-Math.log10(nodes.length);
   }
 
   showAdj(){
     push();
-    stroke(255);
-    strokeWeight(5);
+    strokeWeight(Node.strkw);
     for(let i=0; i<this.adj.length; i++){
+      stroke(this.adj[i].c[0], this.adj[i].c[1], this.adj[i].c[2]);
       line(this.x, this.y, this.adj[i].o.x, this.adj[i].o.y);
+      var m = (this.adj[i].o.y - this.y) / (this.adj[i].o.x - this.x);
+      var x = (this.adj[i].o.x + this.x) / 2;
+      var y = m*x - m*this.x + this.y;
+      push();
+      noStroke();
+      fill(128);
+      textSize(size.value()/3);
+      text(this.adj[i].d, x, y);
+      pop()
     }
     pop();
   }
 
   showVert(){
     push();
-    fill(this.fillValue, 128, 56);
+    fill(this.fillValue, map(this.x, 0, width, 100, 255), map(this.y, 0, height, 100, 255));
     ellipse(this.x, this.y, size.value());
     fill(0);
     textSize(size.value()/2);
@@ -43,7 +53,17 @@ class Node {
   }
 
   setAdjacencies(otherNode, otherDist){
-    this.adj.push({o:otherNode, d:otherDist});
+    this.adj.push({o:otherNode, d:otherDist, c:[255,255,255]});
+  }
+
+  paintPath(next){
+    for (let i=0; i<this.adj.length; i++){
+      if(this.adj[i].o.label == next){
+        this.adj[i].c = [0,0,255];
+        return true;
+      }
+    }
+    return false;
   }
 
   dfs(){
@@ -53,10 +73,26 @@ class Node {
     this.visited = true;
     for(let i=0; i<this.adj.length; i++){
       if(this.adj[i].o.visited == false){
-        console.log(this.adj[i].o.label);
+        // console.log(this.adj[i].o.label);
         order = concat(order, this.adj[i].o.dfs());
       }
     }
     return order;
   }
+
+  ddfs(){
+    let order = []
+    order.push(this.label);
+    this.fillValue = 255;
+    this.visited = true;
+    for(let i=0; i<this.adj.length; i++){
+      if(this.adj[i].o.visited == false && this.x < this.adj[i].o.x){
+        console.log(this.label + " -> " + this.adj[i].o.label);
+        order = concat(order, this.adj[i].o.ddfs());
+      }
+    }
+    return order;
+  }
+
+
 }

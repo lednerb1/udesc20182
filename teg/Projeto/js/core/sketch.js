@@ -1,6 +1,7 @@
 let canvas;
 let bfs;
 let dfs;
+let ddfs;
 let wOff = 128;
 let hOff = 72;
 let wMin = 256;
@@ -13,6 +14,7 @@ let size;
 let moving = -1;
 let nodes = [];
 let dfsOrder = [];
+let paintOrder = [];
 let it=0;
 
 function setup() {
@@ -21,9 +23,12 @@ function setup() {
 	canvas.position((windowWidth - width) / 2,(windowHeight - height) / 2);
 	bfs = createButton('BFS');
 	dfs = createButton('DFS');
+	ddfs = createButton('DDFS');
 	bfs.position(64, 36);
 	dfs.position(104, 36);
+	ddfs.position(144, 36);
 	dfs.mouseClicked(callDfs);
+	ddfs.mouseClicked(callDirectedDfs);
 	frameRate(60);
 	noStroke();
 }
@@ -45,38 +50,72 @@ function draw() {
 	}
 
 	if(dfsOrder.length-it > 0){
-		frameRate(10);
-		nodes[dfsOrder[it++]].fillValue = 120;
+		frameRate(2);
+		if(it < dfsOrder.length-1){
+			var offset = 0;
+			while(!nodes[dfsOrder[it-offset]].paintPath(dfsOrder[it+1])){
+				offset++;
+			}
+			offset=0;
+			while(!nodes[dfsOrder[it+1]].paintPath(dfsOrder[it-offset])){
+				offset++;
+			}
+		}
+		console.log(it);
+		nodes[dfsOrder[it++]].fillValue = 0;
 	}else{
 		frameRate(60);
 	}
 }
 
 function callDfs() {
-	var init = floor(random(0, nodes.length));
-	console.log(init);
+	// var init = floor(random(0, nodes.length));
+	var init = 0;
+	dfsOrder = [];
 	dfsOrder = nodes[init].dfs();
 	it=0;
+	for(let i=0; i<dfsOrder.length; i++){
+		console.log(dfsOrder[i]);
+	}
 	for(let i=0; i<nodes.length; i++){
 		nodes[i].visited = false;
 	}
 }
 
+function callDirectedDfs(){
+	var init = 0;
+	for(let i=0; i<nodes.length; i++){
+		if(nodes[i].x < nodes[init].x){
+			init = i;
+		}
+	}
+	dfsOrder = [];
+	dfsOrder = nodes[init].ddfs();
+	it = 0;
+	for(let i=0; i<nodes.length; i++){
+		nodes[i].visited = false;
+	}
+
+	// paintOrder = [[]];
+	//
+	// for(let i=0; i<dfsOrder.size()-1; i++){
+	// 	paintOrder = concat(paintOrder, [dfsOrder[i], dfsOrder[i+1]]);
+	// }
+
+}
+
 function getNodes(){
 
 	for(let i=0; i<csv.data.length-1; i++){
-		console.log(csv.data[i]["nodeIndex"] + " " + csv.data[i]["nodeX"] + " " + csv.data[i]["nodeY"]);
-		console.log(csv.data[i]["adj1"] + " " + csv.data[i]["adj2"] + " " + csv.data[i]["adj3"]);
 		nodes.push(new Node(csv.data[i]["nodeIndex"], csv.data[i]["nodeX"], csv.data[i]["nodeY"]));
 	}
 
 	for(let i=0; i<nodes.length; i++){
-		if(csv.data[i]["adj1"] != "")
-			nodes[i].setAdjacencies(nodes[parseInt(csv.data[i]["adj1"],10)], csv.data[i]["dist1"]);
-		if(csv.data[i]["adj2"] != "")
-			nodes[i].setAdjacencies(nodes[parseInt(csv.data[i]["adj2"],10)], csv.data[i]["dist2"]);
-		if(csv.data[i]["adj3"] != "")
-			nodes[i].setAdjacencies(nodes[parseInt(csv.data[i]["adj3"],10)], csv.data[i]["dist3"]);
+		for(let j=1; j<=10; j++){
+
+			if(csv.data[i]["adj"+j] != "-1" && csv.data[i]["adj"+j])
+				nodes[i].setAdjacencies(nodes[parseInt(csv.data[i]["adj"+j],10)], csv.data[i]["dist"+j]);
+		}
 	}
 
 }

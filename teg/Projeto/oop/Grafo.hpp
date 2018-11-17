@@ -4,6 +4,7 @@ using namespace std;
 
 typedef struct Vertice {
   int idx;
+  int connections;
   double x;
   double y;
   set<pair<double, int>> adj; // Set de adjacencias pra nao precisar dar sort.
@@ -17,11 +18,13 @@ class Grafo {
 
 private:
   int v;
+  int maxA;
   vector<Vertice> vertices;
   string printArgVer;
   string printArgAdj;
 
 public:
+
   Grafo(int v);
   printVertices();
   printVerticesjs();

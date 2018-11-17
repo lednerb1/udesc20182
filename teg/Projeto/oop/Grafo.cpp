@@ -6,11 +6,16 @@ Grafo::Grafo(int v){
   this->printArgVer = "%"  + aux + "d,%.3lf,%.3lf";
   this->printArgAdj = ",%" + aux + "d,%.3lf";
   Vertice vert;
+  this->maxA = (int) ceil(log2(v));
+  cout << "maxA = " << this->maxA << endl;
 
   set<pair<double,int>> temp;
-  temp.insert({3, -1}); temp.insert({4, -1}); temp.insert({2, -1});
+  for(int i=0; i<this->maxA; i++){
+    temp.insert({3+i, -1});
+  }
   vert.adj = temp;
-
+  vert.connections = 0;
+  srand(time(NULL));
   for(int i=0; i<v; i++){
     vert.idx = i;
     vert.x = (double)(rand() % 1001) / 1000;
@@ -29,12 +34,18 @@ Grafo::printVertices(){
   }
 
 Grafo::printVerticesjs(){
-  FILE * output = fopen("../graph.csv", "w");
-  fprintf(output,"nodeIndex,nodeX,nodeY,adj1,dist1,adj2,dist2,adj3,dist3\n");
+  FILE * output = fopen("graph.csv", "w");
+  fprintf(output,"nodeIndex,nodeX,nodeY");
+  for(int i=1; i<=this->maxA; i++){
+    fprintf(output,",adj%d,dist%d", i, i);
+  }
+  fprintf(output,"\n");
   for(auto v : this->vertices){
     fprintf(output,this->printArgVer.c_str(), v.idx, v.x, v.y);
-    for(auto a : v.adj){
-      fprintf(output,this->printArgAdj.c_str(), a.second, a.first);
+    set<pair<double,int>>::iterator it = v.adj.begin();
+    for(int i=0; i<this->maxA; i++){
+      fprintf(output,this->printArgAdj.c_str(), it->second, it->first);
+      it++;
       // if(v.adj.find(a) != (--v.adj.end())){
       //   printf(", ");
       // }
@@ -46,12 +57,28 @@ Grafo::printVerticesjs(){
 
 Grafo::setArestas(){
   for(auto& v : this->vertices){
+    if(v.connections == this->maxA) continue;
+    set<pair<double, int>> aux;
+    for(int i=0; i<this->maxA-v.connections; i++){
+      aux.insert({10+i, -1});
+    }
     for(auto& vv : this->vertices){
       if(&v != &vv){
+        if(vv.connections == this->maxA) continue;
+        // cout << v.idx << " " << vv.idx << " : ";
         double distancia = v ^ vv;         // Operador de Vertices que calcula a distancia.
-        v.adj.insert({distancia, vv.idx}); // Inserimos de maneira ordenada pelo set.
-        v.adj.erase(--v.adj.end());        // Como o maior elemento sempre vai na ultima posicao, removemos ele.
+        aux.insert({distancia, vv.idx}); // Inserimos de maneira ordenada pelo set.
+        aux.erase(--aux.end());        // Como o maior elemento sempre vai na ultima posicao, removemos ele.
       }
+    }
+    // cout << endl;
+    for(auto& a : aux){
+      if(a.second == -1) continue;
+      v.adj.insert(a);
+      v.connections++;
+      this->vertices[a.second].adj.insert({a.first, v.idx});
+      this->vertices[a.second].adj.erase(--this->vertices[a.second].adj.end());
+      this->vertices[a.second].connections++;
     }
   }
 
