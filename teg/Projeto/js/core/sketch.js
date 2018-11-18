@@ -16,6 +16,8 @@ let nodes = [];
 let dfsOrder = [];
 let paintOrder = [];
 let it=0;
+let timer;
+let date;
 
 function setup() {
 	size = createSlider(3, 100, 25);
@@ -29,6 +31,8 @@ function setup() {
 	ddfs.position(144, 36);
 	dfs.mouseClicked(callDfs);
 	ddfs.mouseClicked(callDirectedDfs);
+	date = new Date();
+	date.setTime(0);
 	frameRate(60);
 	noStroke();
 }
@@ -38,6 +42,7 @@ function draw() {
 	hSize = windowHeight - hOff;
 	canvas.resize(wSize < wMin ? wMin : wSize , hSize < hMin ? hMin : hSize);
 	background(0);
+
 	for(let i=0; i<nodes.length; i++){
 		nodes[i].showAdj();
 	}
@@ -48,29 +53,33 @@ function draw() {
 	if(mouseIsPressed && moving != -1){
 		nodes[moving].move();
 	}
+	// var now = date.getTime();
+	var now = Date.now();
+	if(now > timer + 1000){
+		if(dfsOrder.length-it > 0){
 
-	if(dfsOrder.length-it > 0){
-		frameRate(2);
-		if(it < dfsOrder.length-1){
-			var offset = 0;
-			while(!nodes[dfsOrder[it-offset]].paintPath(dfsOrder[it+1])){
-				offset++;
+			if(it < dfsOrder.length-1){
+				var offset = 0;
+				while(!nodes[dfsOrder[it-offset]].paintPath(dfsOrder[it+1])){
+					offset++;
+				}
+				offset=0;
+				while(!nodes[dfsOrder[it+1]].paintPath(dfsOrder[it-offset])){
+					offset++;
+				}
 			}
-			offset=0;
-			while(!nodes[dfsOrder[it+1]].paintPath(dfsOrder[it-offset])){
-				offset++;
-			}
+			nodes[dfsOrder[it++]].fillValue = 0;
+			timer = Date.now();
 		}
-		console.log(it);
-		nodes[dfsOrder[it++]].fillValue = 0;
-	}else{
-		frameRate(60);
 	}
 }
 
 function callDfs() {
-	// var init = floor(random(0, nodes.length));
-	var init = 0;
+	for(let i=0; i<nodes.length; i++){
+		nodes[i].reset();
+	}
+	var init = floor(random(0, nodes.length));
+	// var init = 0;
 	dfsOrder = [];
 	dfsOrder = nodes[init].dfs();
 	it=0;
@@ -80,9 +89,14 @@ function callDfs() {
 	for(let i=0; i<nodes.length; i++){
 		nodes[i].visited = false;
 	}
+	// timer = date.getTime();
+	timer = Date.now();
 }
 
 function callDirectedDfs(){
+	for(let i=0; i<nodes.length; i++){
+		nodes[i].reset();
+	}
 	var init = 0;
 	for(let i=0; i<nodes.length; i++){
 		if(nodes[i].x < nodes[init].x){
@@ -95,12 +109,6 @@ function callDirectedDfs(){
 	for(let i=0; i<nodes.length; i++){
 		nodes[i].visited = false;
 	}
-
-	// paintOrder = [[]];
-	//
-	// for(let i=0; i<dfsOrder.size()-1; i++){
-	// 	paintOrder = concat(paintOrder, [dfsOrder[i], dfsOrder[i+1]]);
-	// }
 
 }
 
@@ -133,11 +141,6 @@ function handleFileSelect(evt) {
 		  })(f);
 		  reader.readAsText(f);
 		}
-}
-
-function sleepFor( sleepDuration ){
-    var now = new Date().getTime();
-    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
 }
 
 function mousePressed(){

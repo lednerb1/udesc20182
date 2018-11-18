@@ -39,6 +39,13 @@ class Node {
     pop();
   }
 
+  reset(){
+    for(let i=0; i<this.adj.length; i++){
+      this.adj[i].c = [255,255,255];
+    }
+    this.showAdj();
+  }
+
   clicked() {
     var d = dist(mouseX, mouseY, this.x, this.y);
     if(d < size.value() / 4){
