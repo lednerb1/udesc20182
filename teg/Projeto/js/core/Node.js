@@ -73,6 +73,16 @@ class Node {
     return false;
   }
 
+  paintPath(next, col){
+    for (let i=0; i<this.adj.length; i++){
+      if(this.adj[i].o.label == next){
+        this.adj[i].c = col;
+        return true;
+      }
+    }
+    return false;
+  }
+
   dfs(){
     let order = []
     order.push(this.label);
@@ -113,16 +123,17 @@ class Node {
     }
     dis[this.label] = 0;
     let queue = [];
-    queue.push(this.label);
+    queue.push([this.label, this.label]);
     let elementsToIncrease=1;
     let nextElementsToIncrease=0;
     let depth=1;
 
     while(queue.length > 0){
-      let u = queue.shift();
+      let uu = queue.shift();
+      let u = uu[1]
       dis[u] = 0;
       col[u] = pat[depth];
-      bfsOrder = concat(bfsOrder, nodes[u].label);
+      bfsOrder = concat(bfsOrder, {from:uu[0], to:nodes[u].label});
       nextElementsToIncrease += nodes[u].adj.length;
       --elementsToIncrease;
       if(elementsToIncrease == 0){
@@ -136,7 +147,7 @@ class Node {
         let v = next.o;
         if(dis[v.label]){
           dis[v.label] = 0;
-          queue.push(v.label);
+          queue.push([u, v.label]);
         }
       }
     }

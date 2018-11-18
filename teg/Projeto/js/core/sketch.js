@@ -81,12 +81,18 @@ function draw() {
 		}
 
 		if(bfsOrder.length-bit > 0){
-			if(bit < bfsOrder.length-1){
-				var offset = 0;
+			console.log("here");
+			if(bfsOrder[bit].from != bfsOrder[bit].to){
+				nodes[bfsOrder[bit].from].paintPath(bfsOrder[bit].to, bfsColors[bfsOrder[bit].to]);
+				nodes[bfsOrder[bit].to].paintPath(bfsOrder[bit].from, bfsColors[bfsOrder[bit].to]);
 			}
+			nodes[bfsOrder[bit++].from].fillValue = 0;
+
 		}
 	}
 }
+
+
 function callBfs(){
 	for(let i=0; i<nodes.length; i++){
 		nodes[i].reset();
@@ -99,7 +105,8 @@ function callBfs(){
 	for(let i=0; i<bfsOrder.length; i++){
 		console.log(bfsOrder[i]);
 	}
-
+	bit = 0;
+	timer = Date.now();
 }
 
 function callDfs() {
