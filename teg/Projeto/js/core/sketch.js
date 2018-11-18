@@ -11,6 +11,7 @@ let hSize;
 let inputFile;
 let csv;
 let size;
+let speed;
 let moving = -1;
 let nodes = [];
 let dfsOrder = [];
@@ -20,7 +21,9 @@ let timer;
 let date;
 
 function setup() {
+
 	size = createSlider(3, 100, 25);
+	speed = createSlider(1, 30, 20);
 	canvas = createCanvas(windowWidth - wOff, windowHeight - hOff);
 	canvas.position((windowWidth - width) / 2,(windowHeight - height) / 2);
 	bfs = createButton('BFS');
@@ -55,7 +58,7 @@ function draw() {
 	}
 	// var now = date.getTime();
 	var now = Date.now();
-	if(now > timer + 1000){
+	if(now > timer + speed.value()*100){
 		if(dfsOrder.length-it > 0){
 
 			if(it < dfsOrder.length-1){
