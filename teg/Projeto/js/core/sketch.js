@@ -22,19 +22,23 @@ let bit=0;
 let timer;
 let date;
 let bfsColors = [];
+let showAll;
 
 function setup() {
 
+	canvas = createCanvas(windowWidth - wOff, windowHeight - hOff);
 	size = createSlider(3, 100, 25);
 	speed = createSlider(1, 30, 20);
-	canvas = createCanvas(windowWidth - wOff, windowHeight - hOff);
-	canvas.position((windowWidth - width) / 2,(windowHeight - height) / 2);
 	bfs = createButton('BFS');
 	dfs = createButton('DFS');
 	ddfs = createButton('DDFS');
+	showAll = createCheckbox('Show all vertices', true);
+	canvas.position((windowWidth - width) / 2,(windowHeight - height) / 2);
 	bfs.position(64, 36);
 	dfs.position(104, 36);
 	ddfs.position(144, 36);
+	showAll.position(204, 36);
+	showAll.elt.style.color = "white";
 	bfs.mouseClicked(callBfs);
 	dfs.mouseClicked(callDfs);
 	ddfs.mouseClicked(callDirectedDfs);
@@ -81,13 +85,13 @@ function draw() {
 		}
 
 		if(bfsOrder.length-bit > 0){
-			console.log("here");
 			if(bfsOrder[bit].from != bfsOrder[bit].to){
-				nodes[bfsOrder[bit].from].paintPath(bfsOrder[bit].to, bfsColors[bfsOrder[bit].to]);
-				nodes[bfsOrder[bit].to].paintPath(bfsOrder[bit].from, bfsColors[bfsOrder[bit].to]);
+				nodes[bfsOrder[bit].from].paintPath(bfsOrder[bit].to, bfsColors[bfsOrder[bit].from]);
+				nodes[bfsOrder[bit].to].paintPath(bfsOrder[bit].from, bfsColors[bfsOrder[bit].from]);
 			}
-			nodes[bfsOrder[bit++].from].fillValue = 0;
-
+			nodes[bfsOrder[bit].from].fillValue = 0;
+			nodes[bfsOrder[bit++].to].fillValue = 0;
+			timer = Date.now();
 		}
 	}
 }

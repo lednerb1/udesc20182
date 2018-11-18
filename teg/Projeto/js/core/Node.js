@@ -13,6 +13,7 @@ class Node {
     push();
     strokeWeight(Node.strkw);
     for(let i=0; i<this.adj.length; i++){
+      if(this.adj[i].c[0] == 255 && this.adj[i].c[1] == 255 && this.adj[i].c[2] == 255 && !showAll.checked()) continue;
       stroke(this.adj[i].c[0], this.adj[i].c[1], this.adj[i].c[2]);
       line(this.x, this.y, this.adj[i].o.x, this.adj[i].o.y);
       var m = (this.adj[i].o.y - this.y) / (this.adj[i].o.x - this.x);
@@ -63,17 +64,8 @@ class Node {
     this.adj.push({o:otherNode, d:otherDist, c:[255,255,255]});
   }
 
-  paintPath(next){
-    for (let i=0; i<this.adj.length; i++){
-      if(this.adj[i].o.label == next){
-        this.adj[i].c = [0,0,255];
-        return true;
-      }
-    }
-    return false;
-  }
-
   paintPath(next, col){
+    if(col == null) col = [0,0,255];
     for (let i=0; i<this.adj.length; i++){
       if(this.adj[i].o.label == next){
         this.adj[i].c = col;
@@ -112,9 +104,9 @@ class Node {
   }
 
   bfs() {
-    let pat = [ [255, 255, 255] , [0, 0, 255] , [255, 0, 0] , [0, 255, 0] ,
-            [200, 255, 200] , [100, 255, 100] , [0, 255, 0] , [0, 100, 0] ,
-            [255, 0, 0] , [255 , 100, 100] , [255, 200, 200]  ];
+    let pat = [ [255, 255, 255] , [0, 0, 255] , [0, 175, 175] ,
+            [0, 100, 0] , [0, 255, 0] , [0, 255, 0] , [175, 255, 0] ,
+            [255, 175, 0] , [255 , 0, 0] , [175, 0, 0]  ];
     let dis = [];
     let col = [];
     for(let i=0; i < nodes.length; i++){
@@ -127,6 +119,7 @@ class Node {
     let elementsToIncrease=1;
     let nextElementsToIncrease=0;
     let depth=1;
+    nextElementsToIncrease += nodes[this.label].adj.length;
 
     while(queue.length > 0){
       let uu = queue.shift();
@@ -134,22 +127,26 @@ class Node {
       dis[u] = 0;
       col[u] = pat[depth];
       bfsOrder = concat(bfsOrder, {from:uu[0], to:nodes[u].label});
-      nextElementsToIncrease += nodes[u].adj.length;
+
       --elementsToIncrease;
       if(elementsToIncrease == 0){
         depth++;
         elementsToIncrease = nextElementsToIncrease;
         nextElementsToIncrease = 0;
       }
-
+      var summer = 0;
       for(let i=0; i < nodes[u].adj.length; i++){
         let next = nodes[u].adj[i];
         let v = next.o;
         if(dis[v.label]){
+          summer++;
           dis[v.label] = 0;
           queue.push([u, v.label]);
         }
       }
+
+      nextElementsToIncrease += summer;
+
     }
 
     for(let i=0; i<col.length; i++){
