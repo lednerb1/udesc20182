@@ -101,5 +101,53 @@ class Node {
     return order;
   }
 
+  bfs() {
+    let pat = [ [255, 255, 255] , [0, 0, 255] , [100, 100, 255] , [200, 200, 255] ,
+            [200, 255, 200] , [100, 255, 100] , [0, 255, 0] , [0, 100, 0] ,
+            [255, 0, 0] , [255 , 100, 100] , [255, 200, 200]  ];
+    let dis = [];
+    let col = [];
+    for(let i=0; i < nodes.length; i++){
+      dis[i] = 1;
+      col[i] = 0;
+    }
+    dis[this.label] = 0;
+    let queue = [];
+    queue.push(this.label);
+    let elementsToIncrease=1;
+    let nextElementsToIncrease=0;
+    let depth=1;
+
+    while(queue.length > 0){
+      let u = queue.shift();
+      dis[u] = 0;
+      col[u] = pat[depth];
+      bfsOrder = concat(bfsOrder, nodes[u].label);
+      nextElementsToIncrease += nodes[u].adj.length;
+      --elementsToIncrease;
+      if(elementsToIncrease == 0){
+        depth++;
+        elementsToIncrease = nextElementsToIncrease;
+        nextElementsToIncrease = 0;
+      }
+
+      for(let i=0; i < nodes[u].adj.length; i++){
+        let next = nodes[u].adj[i];
+        let v = next.o;
+        if(dis[v.label]){
+          dis[v.label] = 0;
+          queue.push(v.label);
+        }
+      }
+    }
+
+    for(let i=0; i<col.length; i++){
+      console.log(i + " " + col[i]);
+    }
+
+    return col;
+
+  }
+
 
 }

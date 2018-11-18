@@ -15,10 +15,13 @@ let speed;
 let moving = -1;
 let nodes = [];
 let dfsOrder = [];
+let bfsOrder = [];
 let paintOrder = [];
-let it=0;
+let dit=0;
+let bit=0;
 let timer;
 let date;
+let bfsColors = [];
 
 function setup() {
 
@@ -32,6 +35,7 @@ function setup() {
 	bfs.position(64, 36);
 	dfs.position(104, 36);
 	ddfs.position(144, 36);
+	bfs.mouseClicked(callBfs);
 	dfs.mouseClicked(callDfs);
 	ddfs.mouseClicked(callDirectedDfs);
 	date = new Date();
@@ -56,25 +60,46 @@ function draw() {
 	if(mouseIsPressed && moving != -1){
 		nodes[moving].move();
 	}
-	// var now = date.getTime();
-	var now = Date.now();
-	if(now > timer + speed.value()*100){
-		if(dfsOrder.length-it > 0){
 
-			if(it < dfsOrder.length-1){
+	var now = Date.now();
+
+	if(now > timer + speed.value()*100){
+		if(dfsOrder.length-dit > 0){
+
+			if(dit < dfsOrder.length-1){
 				var offset = 0;
-				while(!nodes[dfsOrder[it-offset]].paintPath(dfsOrder[it+1])){
+				while(!nodes[dfsOrder[dit-offset]].paintPath(dfsOrder[dit+1])){
 					offset++;
 				}
 				offset=0;
-				while(!nodes[dfsOrder[it+1]].paintPath(dfsOrder[it-offset])){
+				while(!nodes[dfsOrder[dit+1]].paintPath(dfsOrder[dit-offset])){
 					offset++;
 				}
 			}
-			nodes[dfsOrder[it++]].fillValue = 0;
+			nodes[dfsOrder[dit++]].fillValue = 0;
 			timer = Date.now();
 		}
+
+		if(bfsOrder.length-bit > 0){
+			if(bit < bfsOrder.length-1){
+				var offset = 0;
+			}
+		}
 	}
+}
+function callBfs(){
+	for(let i=0; i<nodes.length; i++){
+		nodes[i].reset();
+	}
+	// var init = floor(random(0, nodes.length));
+	var init = 0;
+	bfsOrder = [];
+	bfsColors = nodes[init].bfs();
+
+	for(let i=0; i<bfsOrder.length; i++){
+		console.log(bfsOrder[i]);
+	}
+
 }
 
 function callDfs() {
@@ -85,7 +110,7 @@ function callDfs() {
 	// var init = 0;
 	dfsOrder = [];
 	dfsOrder = nodes[init].dfs();
-	it=0;
+	dit=0;
 	for(let i=0; i<dfsOrder.length; i++){
 		console.log(dfsOrder[i]);
 	}
@@ -108,7 +133,7 @@ function callDirectedDfs(){
 	}
 	dfsOrder = [];
 	dfsOrder = nodes[init].ddfs();
-	it = 0;
+	dit = 0;
 	for(let i=0; i<nodes.length; i++){
 		nodes[i].visited = false;
 	}
