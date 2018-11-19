@@ -14,6 +14,10 @@ public class Generator {
     public Generator(int n, int diff){
         board = new Board(n);
         this.diff = diff;
-    } 
+    }
+    
+    public Board getBoard(){
+        return this.board;
+    }
     
 }
