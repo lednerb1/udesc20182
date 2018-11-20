@@ -13,5 +13,5 @@ public interface ISearchStrategy {
         /* */
     }
     
-    public abstract ArrayList<WordLocation> search();
+    public abstract ArrayList<WordLocation> search(boolean removeGarb);
 }

@@ -18,71 +18,39 @@ import java.util.logging.Logger;
  *
  * @author peter
  */
-public class MorrisPratt implements ISearchStrategy {
+public class MorrisPratt extends AbstractSearch {
 
-    private ArrayList<String[]> temp;
-    private String word;
-    private ArrayList<Integer> strSize;
-    
-
+    private int[] next;
     
     public MorrisPratt(File file, String word) {
-        temp = new ArrayList<>();
-        strSize = new ArrayList<>();
-        this.word = word;
-        BufferedReader read = null;
-        String line;
-        int i=0;
-        
-        try {
-            read = new BufferedReader(new FileReader(file));
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MorrisPratt.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            while((line = read.readLine()) != null){
-                prepareSearch(line, word);
-                i++;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(NaiveSearch.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        super(file, word);
+        next = new int[word.length()+1];
     }
     
-    private boolean buscar(String txt, String padrao){
-        System.out.println("chegando");
-        System.out.println(txt + " x " + padrao);
+    @Override
+    protected boolean buscar(String txt, String padrao){
         int m = 0;
         int i = 0;
         int txtSize = txt.length();
         int padSize = padrao.length();
         
         if(txtSize != padSize){
-            System.out.println("voltano1");
             return false;
         }
         
         int[] table = new int[padSize+1];
-        table[0] = 0;
         
-        i=1;
+        // Filipe Ramos -- Paula Campigotto
         int j=0;
-        while(i<padSize){
-            System.out.println("tabelando");
-            if(padrao.charAt(i) == padrao.charAt(j)){
-                table[i] = j+1;
-                i++;
-                j++;
-            }else if(j>0){
-                j = table[j-1];
-            }else {
-                table[i] = 0;
-                i++;
-            }
+        i = 0;
+        j = table[0] = -1;
+        
+        while(i < padSize){
+            while(j > -1 && padrao.charAt(i) != padrao.charAt(j)) j = table[j];
+            table[++i] = ++j;
         }
-        System.out.println("vazano");
+        // 
+        
         i=0;
         while((m + i) < txtSize){
             System.out.println(m + " : " + i);
@@ -102,43 +70,20 @@ public class MorrisPratt implements ISearchStrategy {
             
         }
         
-        System.out.println("saindo");
-        return false;
-    }
-    
-    @Override
-    public void prepareSearch(String text, String word) {
-        temp.add(text.split(" "));
-        strSize.add(temp.get(temp.size()-1).length);
-    }
-
-    @Override
-    public ArrayList<WordLocation> search() {
-        ArrayList<WordLocation> returner = new ArrayList<>();
-        long init = System.currentTimeMillis();
-        int l=0;
-        int c=0;
-        
-        // Logica Naive
-        for(String[] arr : temp){
-            c=0;
-            for(int i=0; i<arr.length; i++){
-                if(buscar(arr[i], word)){
-                    long end = System.currentTimeMillis();
-                    WordLocation temp = new WordLocation(word);
-                    temp.setTime(end-init);
-                    temp.setLine(l+1);
-                    temp.setColumn(c+1);
-                    returner.add(temp);
-                    init = System.currentTimeMillis();
-                }else{
-                    c += arr[i].length();
-                }
-            }
-            l++;
+        // Filie Ramos -- Paula Campigotto
+        /*
+        int n = txtSize;
+        i = 0;
+        j = 0;
+        while(j < n){
+            while(i > -1 && padrao.charAt(i) != txt.charAt(j)) i = table[i];
+            i++;
+            j++;
+            if(i >= padSize) return true;
         }
-        
-        return returner;
+        // 
+        */
+        return false;
     }
     
 }

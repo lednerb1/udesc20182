@@ -127,24 +127,24 @@ public class main extends javax.swing.JFrame {
             if(o.toString().equals("Naive Search")){
                 for(File f : fileManager.getFiles()){
                     areaTexto.append(f.getName() + "\n");
-                    temp = factory.naive(f, toSearch).search();
+                    temp = factory.naive(f, toSearch).search(false);
                 }
                 
             }else if(o.toString().equals("Rabin Karp")) {
                 for(File f : fileManager.getFiles()){
                     areaTexto.append(f.getName() + "\n");
-                    temp = factory.rabinkarp(f, toSearch).search();
+                    temp = factory.rabinkarp(f, toSearch).search(false);
                 }
                     
             } else if(o.toString().equals("KMP")) {
                 for(File f : fileManager.getFiles()){
                     areaTexto.append(f.getName() + "\n");
-                    temp = factory.morrispratt(f, toSearch).search();
+                    temp = factory.morrispratt(f, toSearch).search(false);
                 }
             } else if(o.toString().equals("Boyer Moore")) {
                 for(File f : fileManager.getFiles()){
                     areaTexto.append(f.getName() + "\n");
-                    temp = factory.boyermoore(f, toSearch).search();
+                    temp = factory.boyermoore(f, toSearch).search(false);
                 }
             }
             
