@@ -33,4 +33,14 @@ public class FactorySearch {
         return boyermoore;
     }
     
+    public AhoCorasick ahocorasick(File file, String word){
+        AhoCorasick ahocorasick = new AhoCorasick(file, word);
+        return ahocorasick;
+    }
+    
+    public RadixTree radixtree(File file, String word){
+        RadixTree radixtree = new RadixTree(file, word);
+        return radixtree;
+    }
+    
 }

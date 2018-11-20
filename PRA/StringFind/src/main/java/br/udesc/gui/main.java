@@ -146,6 +146,16 @@ public class main extends javax.swing.JFrame {
                     areaTexto.append(f.getName() + "\n");
                     temp = factory.boyermoore(f, toSearch).search(false);
                 }
+            } else if(o.toString().equals("Aho Corasick")) {
+                for(File f : fileManager.getFiles()){
+                    areaTexto.append(f.getName() + "\n");
+                    temp = factory.ahocorasick(f, toSearch).search(false);
+                }
+            } else if(o.toString().equals("Radix Tree")) {
+                for(File f : fileManager.getFiles()){
+                    areaTexto.append(f.getName() + "\n");
+                    temp = factory.radixtree(f, toSearch).search(false);
+                }
             }
             
             for(WordLocation w : temp){

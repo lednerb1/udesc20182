@@ -40,8 +40,10 @@ public abstract class AbstractSearch implements ISearchStrategy {
         }
         
         try {
-            while((line = read.readLine()) != null){
+            line = read.readLine();
+            while(line != null){
                 prepareSearch(line, word);
+                line = read.readLine();
             }
         } catch (IOException ex) {
             Logger.getLogger(NaiveSearch.class.getName()).log(Level.SEVERE, null, ex);
