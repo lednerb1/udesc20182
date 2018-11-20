@@ -42,7 +42,7 @@ public class main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        dropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Naive Search", "Item 2", "Item 3", "Item 4" }));
+        dropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Naive Search", "Rabin Karp", "KMP", "Boyer Moore" }));
         dropdown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dropdownActionPerformed(evt);
@@ -119,21 +119,39 @@ public class main extends javax.swing.JFrame {
         
         Object o = dropdown.getSelectedItem();
         areaTexto.setText("");
+        ArrayList<WordLocation> temp = null;
+        String toSearch = toFind.getText();
         
-        if(o.toString().equals("Naive Search")){
-            String toSearch = toFind.getText();
-            if(toSearch != null){
+        if(toSearch != null){
+            
+            if(o.toString().equals("Naive Search")){
                 for(File f : fileManager.getFiles()){
                     areaTexto.append(f.getName() + "\n");
-                    ArrayList<WordLocation> temp = factory.naive(f, toSearch).search();
-                    for(WordLocation w : temp){
-                        areaTexto.append(w.toString() + "\n");
-                    }
+                    temp = factory.naive(f, toSearch).search();
+                }
+                
+            }else if(o.toString().equals("Rabin Karp")) {
+                for(File f : fileManager.getFiles()){
+                    areaTexto.append(f.getName() + "\n");
+                    temp = factory.rabinkarp(f, toSearch).search();
+                }
+                    
+            } else if(o.toString().equals("KMP")) {
+                for(File f : fileManager.getFiles()){
+                    areaTexto.append(f.getName() + "\n");
+                    temp = factory.morrispratt(f, toSearch).search();
+                }
+            } else if(o.toString().equals("Boyer Moore")) {
+                for(File f : fileManager.getFiles()){
+                    areaTexto.append(f.getName() + "\n");
+                    temp = factory.boyermoore(f, toSearch).search();
                 }
             }
-        }
-        
-        
+            
+            for(WordLocation w : temp){
+                areaTexto.append(w.toString() + "\n");
+            }
+        }   
     }//GEN-LAST:event_buscarActionPerformed
 
     private void dropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropdownActionPerformed

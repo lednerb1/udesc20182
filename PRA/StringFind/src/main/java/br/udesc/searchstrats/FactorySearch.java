@@ -18,4 +18,19 @@ public class FactorySearch {
         return naive;
     }
     
+    public RabinKarp rabinkarp(File file, String word){
+        RabinKarp rabinkarp = new RabinKarp(file, word);
+        return rabinkarp;
+    }
+    
+    public MorrisPratt morrispratt(File file, String word){
+        MorrisPratt morrispratt = new MorrisPratt(file, word);
+        return morrispratt;
+    }
+    
+    public BoyerMoore boyermoore(File file, String word){
+        BoyerMoore boyermoore = new BoyerMoore(file, word);
+        return boyermoore;
+    }
+    
 }

@@ -6,6 +6,7 @@
 package br.udesc.files;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,6 +17,7 @@ public class FileManager {
     private Set<File> files;
     
     public FileManager(){
+        files = new HashSet<File>();
     }
     
     public Set<File> getFiles(){
