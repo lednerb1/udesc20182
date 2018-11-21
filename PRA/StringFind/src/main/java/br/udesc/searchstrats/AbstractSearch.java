@@ -78,7 +78,7 @@ public abstract class AbstractSearch implements ISearchStrategy {
                     temp.setLine(l+1);
                     temp.setColumn(c+1);
                     returner.add(temp);
-                    init = System.currentTimeMillis();
+//                    init = System.currentTimeMillis();
                 }else{
                     c += arr[i].length();
                 }

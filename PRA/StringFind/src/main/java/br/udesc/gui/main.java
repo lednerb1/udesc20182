@@ -42,7 +42,7 @@ public class main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        dropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Naive Search", "Rabin Karp", "KMP", "Boyer Moore" }));
+        dropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Naive Search", "Rabin Karp", "KMP", "Boyer Moore", "Aho Corasick", "Radix Tree" }));
         dropdown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dropdownActionPerformed(evt);

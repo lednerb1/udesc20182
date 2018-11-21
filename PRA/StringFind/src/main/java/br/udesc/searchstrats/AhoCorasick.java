@@ -48,7 +48,7 @@ public class AhoCorasick extends AbstractSearch{
         nd.child = new HashMap<Integer, node>();
         return nd;
     }
-    
+//    the letter any more
 //    public boolean buscar(String txt, String padrao){
 //        
 //    }

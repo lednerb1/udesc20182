@@ -43,7 +43,7 @@ public class WordLocation {
     @Override
     public String toString(){
         return word + " encontrado na linha " + line + " coluna " + column + "\n"
-                + "Found in: " + timeToFind / 1000 + " s\n";
+                + "Found in: " + (float)timeToFind / 1000.0 + " s\n";
     }
     
 }
