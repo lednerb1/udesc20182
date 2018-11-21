@@ -106,16 +106,9 @@ public class Sudokuu {
     // A recursive function to fill remaining 
     // matrix 
     boolean fillRemaining(int i, int j) { 
-        System.out.println("1 - " + i + " " + j);
         if (j >= N && i < N - 1) {
             i = i + 1;
             j = 0;
-            System.out.println("entrou");
-            for(int m=0; i<N; i++){
-                for(int n=0; n<N; n++)
-                    System.out.print(mat[m][n] + " ");
-                System.out.println();
-            }
         }
         if (i >= N && j >= N) {
             return true;
@@ -138,11 +131,11 @@ public class Sudokuu {
                 }
             }
         }
-        System.out.println("2- " + i + " " + j);
+//        System.out.println("2- " + i + " " + j);
         for (int num = 1; num <= N; num++) {
             if (CheckIfSafe(i, j, num)) {
                 mat[i][j] = num;
-                System.out.println("---> "+mat[i][j]);
+//                System.out.println("---> "+mat[i][j]);
                 if (fillRemaining(i, j + 1)) {
                     return true;
                 }
@@ -184,7 +177,7 @@ public class Sudokuu {
 
     // Driver code 
     public static void main(String[] args) {
-        int N = 9, K = 1;
+        int N = 16, K = 20;
         Sudokuu sudoku = new Sudokuu(N, K);
         sudoku.fillValues();
         sudoku.printSudoku();
