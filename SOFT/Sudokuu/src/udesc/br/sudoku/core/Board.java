@@ -25,6 +25,7 @@ public class Board {
         this.sqr = n;
         matrix = new int[n*n][n*n];
         letras = new char[n*n+1];
+        
         for(int i=0; i<10; i++){
             letras[i] = (char)(i+'0');
         }
@@ -80,41 +81,34 @@ public class Board {
         }
     }
     
-    private int[] checkSurrounds(int i, int j){
-        int[] temp = new int[sqr*sqr+1];
+    private boolean checkSurrounds(int i, int j, int m){
         
         // Checking Lines and Cols
         for(int c = 0; c < sqr*sqr; c++) {
-
-            if(matrix[i][c] == 0) continue;
-            temp[matrix[i][c]] = 1;
-            if(matrix[c][j] == 0) continue;
-            temp[matrix[c][j]] = 1;
+            if(matrix[i][c] == m || matrix[c][j] == m)
+                return false;
         }
         
         // Checking Box
         int l = i - i % sqr;
         int c = j - j % sqr;
-        int ll = l+3;
-        int cc = c+3;
+        int ll = l+sqr;
+        int cc = c+sqr;
+        
         for(; l < ll; l++){
             for(c = j - j % sqr; c < cc; c++){
-                if(matrix[l][c] == 0) continue;
-                temp[matrix[l][c]] = 1;
+                if(matrix[l][c] == m) return false;
             }
         }
         
-        // Return array of available numbers
-        return temp;
+        return true;
     }
     
     private boolean fillResto(int i, int j){
-        
-        System.out.println(i + " " + j);
-        
+//        System.out.println(i + " " + j);
         if (j >= sqr*sqr && i < sqr*sqr - 1) {
-            i = i + 1;
-            j = 0;
+            i++;
+            j=0;
         }
         if (i >= sqr*sqr && j >= sqr*sqr) {
             return true;
@@ -126,11 +120,11 @@ public class Board {
             }
         } else if (i < sqr*sqr - sqr) {
             if (j == (int) (i / sqr) * sqr) {
-                j = j + sqr;
+                j += sqr;
             }
         } else {
             if (j == sqr*sqr - sqr) {
-                i = i + 1;
+                i++;
                 j = 0;
                 if (i >= sqr*sqr) {
                     return true;
@@ -138,18 +132,14 @@ public class Board {
             }
         }
         
-        if(matrix[i][j] == 0){
-            int[] nums = checkSurrounds(i, j);
-
-            for(int next = 1; next <= nums.length-1; next++){
-                if(nums[next] == 0){
-                    matrix[i][j] = next;
-                }
-                else continue;
+        for(int next = 1; next <= sqr*sqr; next++){
                 
+            if(checkSurrounds(i, j, next)){
+                matrix[i][j] = next;
+
                 if(fillResto(i, j+1))
                     return true;
-               
+
                 matrix[i][j] = 0;
             }
         }
@@ -177,7 +167,7 @@ public class Board {
                 if(j == sqr)
                     break;
             }
-            matrix[r+j][(c+i)] = n;;
+            matrix[r+j][(c+i)] = n;
             i++;
         }   
     }
@@ -187,7 +177,10 @@ public class Board {
         for(int i=0; i<sqr*sqr; i++){
             for(int j=0; j<sqr*sqr; j++){
 //                System.out.println(matrix[i][j] + " ");
-                System.out.print(letras[matrix[i][j]] + " ");
+                if(matrix[i][j] == 0)
+                    System.out.print(". ");
+                else
+                    System.out.print(letras[matrix[i][j]] + " ");
             }
             System.out.println();
         }
