@@ -35,6 +35,7 @@ public class Board {
         generate();
     }
     
+    
     public int getPos(int i, int j){
         return this.matrix[i][j];
     }
@@ -183,6 +184,18 @@ public class Board {
                     System.out.print(letras[matrix[i][j]] + " ");
             }
             System.out.println();
+        }
+    }
+    
+    private void removerK(int k){
+        Random r = new Random();
+        while(k != 0){
+            int i = r.nextInt(sqr*sqr);
+            int j = r.nextInt(sqr*sqr);
+            if(matrix[i][j] != 0){
+                matrix[i][j] = 0;
+                k--;
+            }
         }
     }
 }
