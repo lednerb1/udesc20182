@@ -9,7 +9,9 @@ package udesc.br.sudoku.core;
 public class Generator {
     
     private Board board;
-    private int diff;
+    private int diff; // a ideia é, mandar 0-25, 1-50 ou 2-75... Seriam as representacoes em porcentagem para se tirar
+                        // ex: 9x9 = 81 celulas de matriz, se escolher a opcao media, pegaria 81 x 0.5 = 40 celulas
+                        // para deixar em branco(usuario completar)
     
     public Generator(int n, int diff){
         board = new Board(n);
@@ -19,5 +21,7 @@ public class Generator {
     public Board getBoard(){
         return this.board;
     }
+    
+    
     
 }

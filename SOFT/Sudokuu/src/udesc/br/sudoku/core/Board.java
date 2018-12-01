@@ -24,11 +24,12 @@ public class Board {
     public Board(int n){
         this.sqr = n;
         matrix = new int[n*n][n*n];
-        letras = new char[n*n+1];
-        
-        for(int i=0; i<10; i++){
+        letras = new char[17];
+        for(int i=1; i<10 && i<n*n ; i++){
             letras[i] = (char)(i+'0');
+            System.out.println(letras[i] +"  -  " + i);
         }
+        System.out.println("esse");
         for(int i=10; i<=n*n; i++){
             letras[i] = (char)(i-10+'A');
         }
@@ -69,6 +70,7 @@ public class Board {
     }
     
     private void generate() {
+        System.out.println("deu ruim");
         fillDiagonal();
         print();
         fillResto(0, sqr);
