@@ -181,5 +181,6 @@ public class Sudokuu {
         Sudokuu sudoku = new Sudokuu(N, K);
         sudoku.fillValues();
         sudoku.printSudoku();
+    
     }
 }

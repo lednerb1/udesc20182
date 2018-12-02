@@ -5,17 +5,83 @@
  */
 package udesc.br.sudoku.gui;
 
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import udesc.br.sudoku.core.Generator;
+
 /**
  *
- * @author guilhermeutiama
+ * @author guilhermeutiama , caio
  */
 public class InterJogo extends javax.swing.JFrame {
+
+    private Generator gerador;
+    static final Border DIVISAO = BorderFactory.createLineBorder(Color.BLACK);
+    Botao selecionado;
+    private final JTextField[][] grid;
+    private final Map<JTextField, Point> mapFieldToCoordinates
+            = new HashMap<>();
+
+    private int dimension;
+    private JPanel gridPanel;
 
     /**
      * Creates new form InterJogo
      */
-    public InterJogo() {
-        initComponents();
+    public InterJogo(Generator gerador) {
+        this.gerador = gerador;
+        this.grid = new JTextField[dimension][dimension];
+        this.dimension = gerador.n;
+
+        init();
+
+    }
+
+    private void init() {
+        JPanel root = new JPanel(new GridLayout(dimension, dimension));
+
+        for (int i = 0; i < dimension*dimension; i++) {
+            JPanel divisao = new JPanel(new GridLayout(dimension, dimension));
+            divisao.setBorder(DIVISAO);
+            for (int j = 0; j < dimension*dimension; j++) {
+                divisao.add(new Botao(gerador.getBoard().getPos(i, j)));
+            }
+            root.add(divisao);
+        }
+
+        getContentPane().add(root);
+
+        initKeyListener();
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+    }
+
+    private void initKeyListener() {
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (selecionado != null) {
+                    selecionado.setText(Objects.toString(e.getKeyChar()));
+                }
+            }
+        });
     }
 
     /**
@@ -46,7 +112,7 @@ public class InterJogo extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -74,11 +140,53 @@ public class InterJogo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterJogo().setVisible(true);
+                new InterJogo(gerador).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    static final Border BORDA_NORMAL = BorderFactory.createLineBorder(Color.GRAY);
+    static final Border BORDA_SELECIONADO = BorderFactory.createLineBorder(Color.RED);
+    static final Color COR_NORMAL = Color.WHITE;
+    static final Color COR_SELECIONADO = Color.YELLOW;
+
+    class Botao extends JLabel {
+
+        public Botao(int valor) {
+            super();
+            String aux = Integer.toString(valor);
+            super.setText(aux);
+            init();
+        }
+
+        private void init() {
+            setBackground(COR_NORMAL);
+            setBorder(BORDA_NORMAL);
+            setPreferredSize(new Dimension(64, 64));
+            setOpaque(true);
+            Botao esteBotao = this;
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    selecionaBotao(esteBotao);
+                }
+            });
+        }
+    }
+
+    void selecionaBotao(Botao botao) {
+        // se tem selecionado
+        if (selecionado != null) {
+            selecionado.setBackground(COR_NORMAL);
+            selecionado.setBorder(BORDA_NORMAL);
+        }
+        // seleciona o novo se não for nulo
+        if (botao != null) {
+            botao.setBackground(COR_SELECIONADO);
+            botao.setBorder(BORDA_SELECIONADO);
+        }
+        selecionado = botao;
+    }
 }

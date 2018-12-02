@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package udesc.br.sudoku.gui;
+
 import udesc.br.sudoku.core.*;
 import java.util.ArrayList;
 
@@ -18,9 +19,10 @@ public class inte extends javax.swing.JFrame {
      */
 //    protected static Level level;
     private ArrayList<javax.swing.JButton> buttons = new ArrayList<>();
-    private int nivel;
+    public int nivel;
     protected Generator generator;
-    protected InterJogo jogo = new InterJogo();
+    protected InterJogo jogo;
+
     public inte() {
         this.setTitle("Sudoku");
         initComponents();
@@ -34,8 +36,7 @@ public class inte extends javax.swing.JFrame {
         buttons.add(medio17);
         buttons.add(dificil17);
         hide_all();
-        
-        
+
     }
 
     /**
@@ -232,7 +233,7 @@ public class inte extends javax.swing.JFrame {
         this.facil5.setVisible(true);
         this.medio5.setVisible(true);
         this.dificil5.setVisible(true);
-        
+
     }//GEN-LAST:event_base5ActionPerformed
 
     private void base17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base17ActionPerformed
@@ -244,55 +245,64 @@ public class inte extends javax.swing.JFrame {
     }//GEN-LAST:event_base17ActionPerformed
 
     private void facil5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facil5ActionPerformed
-        generator = new Generator(nivel,0);
+        generator = new Generator(nivel, 0);
+        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_facil5ActionPerformed
 
     private void medio5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medio5ActionPerformed
-        generator = new Generator(nivel,1);
+        generator = new Generator(nivel, 1);
+        jogo = new InterJogo(generator);        // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_medio5ActionPerformed
 
     private void dificil5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dificil5ActionPerformed
-        generator = new Generator(nivel,2);
+        generator = new Generator(nivel, 2);
+        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_dificil5ActionPerformed
 
     private void facil10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facil10ActionPerformed
-        generator = new Generator(nivel,0);
+        generator = new Generator(nivel, 0);
+        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_facil10ActionPerformed
 
     private void facil17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facil17ActionPerformed
-        generator = new Generator(nivel,0);
+        generator = new Generator(nivel, 0);
+        jogo = new InterJogo(generator);// para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_facil17ActionPerformed
 
     private void medio10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medio10ActionPerformed
-        generator = new Generator(nivel,1);
+        generator = new Generator(nivel, 1);
+        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_medio10ActionPerformed
 
     private void medio17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medio17ActionPerformed
-        generator = new Generator(nivel,1);
+        generator = new Generator(nivel, 1);
+        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_medio17ActionPerformed
 
     private void dificil10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dificil10ActionPerformed
-        generator = new Generator(nivel,2);
+        generator = new Generator(nivel, 2);
+        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_dificil10ActionPerformed
 
     private void dificil17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dificil17ActionPerformed
-        generator = new Generator(nivel,2);
+        generator = new Generator(nivel, 2);
+        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
         this.setVisible(false);
         jogo.setVisible(true);
     }//GEN-LAST:event_dificil17ActionPerformed
@@ -332,12 +342,12 @@ public class inte extends javax.swing.JFrame {
             }
         });
     }
-    
-    protected void hide_all(){
-        this.buttons.forEach((button)->button.setVisible(false));
+
+    protected void hide_all() {
+        this.buttons.forEach((button) -> button.setVisible(false));
     }
-    
-    void setNivel(int nivel){
+
+    void setNivel(int nivel) {
         this.nivel = nivel;
     }
 
