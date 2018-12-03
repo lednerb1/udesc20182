@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Caio K.
@@ -25,11 +27,10 @@ public class Board {
         this.sqr = n;
         matrix = new int[n*n][n*n];
         letras = new char[17];
-        for(int i=1; i<10 && i<n*n ; i++){
+        for(int i=1; i<10 && i<=n*n ; i++){
             letras[i] = (char)(i+'0');
-            System.out.println(letras[i] +"  -  " + i);
         }
-        System.out.println("esse");
+        
         for(int i=10; i<=n*n; i++){
             letras[i] = (char)(i-10+'A');
         }
@@ -57,12 +58,14 @@ public class Board {
     public int[] getSqr(int i, int j){
         int l = i - i % sqr;
         int c = j - j % sqr;
+        int ll = l+sqr;
+        int cc = c+sqr;
         
         int[] SQR = new int[sqr*sqr];
         
         int cont=0;
-        for(; l < sqr; l++){
-            for(; c < sqr; c++){
+        for(; l < ll; l++){
+            for(c = j - j % sqr; c < cc; c++){
                 SQR[cont++] = matrix[l][c];
             }
         }
@@ -70,11 +73,8 @@ public class Board {
     }
     
     private void generate() {
-        System.out.println("deu ruim");
         fillDiagonal();
-        print();
         fillResto(0, sqr);
-        System.out.println("");
         print();
     }
     
@@ -108,7 +108,7 @@ public class Board {
     }
     
     private boolean fillResto(int i, int j){
-//        System.out.println(i + " " + j);
+//        System.out.println(i+","+j);
         if (j >= sqr*sqr && i < sqr*sqr - 1) {
             i++;
             j=0;
@@ -175,7 +175,7 @@ public class Board {
         }   
     }
     
-    private void print(){
+    public void print(){
                
         for(int i=0; i<sqr*sqr; i++){
             for(int j=0; j<sqr*sqr; j++){
@@ -200,4 +200,44 @@ public class Board {
             }
         }
     }
+    
+    // Check if safe to put in cell 
+    boolean CheckIfSafe(int i, int j, int num) {
+        return (unUsedInRow(i, num)
+                && unUsedInCol(j, num)
+                && unUsedInBox(i - i % sqr, j - j % sqr, num));
+    }
+
+    // check in the row for existence 
+    boolean unUsedInRow(int i, int num) {
+        for (int j = 0; j < sqr*sqr; j++) {
+            if (matrix[i][j] == num) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check in the row for existence 
+    boolean unUsedInCol(int j, int num) {
+        for (int i = 0; i < sqr*sqr; i++) {
+            if (matrix[i][j] == num) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    boolean unUsedInBox(int rowStart, int colStart, int num) {
+        for (int i = 0; i < sqr; i++) {
+            for (int j = 0; j < sqr; j++) {
+                if (matrix[rowStart + i][colStart + j] == num) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }

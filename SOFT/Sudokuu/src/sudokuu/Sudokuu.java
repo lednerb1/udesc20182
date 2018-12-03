@@ -177,7 +177,7 @@ public class Sudokuu {
 
     // Driver code 
     public static void main(String[] args) {
-        int N = 16, K = 20;
+        int N = 9, K = 2;
         Sudokuu sudoku = new Sudokuu(N, K);
         sudoku.fillValues();
         sudoku.printSudoku();

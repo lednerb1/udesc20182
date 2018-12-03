@@ -55,12 +55,14 @@ public class InterJogo extends javax.swing.JFrame {
 
     private void init() {
         JPanel root = new JPanel(new GridLayout(dimension, dimension));
-
-        for (int i = 0; i < dimension*dimension; i++) {
+        
+        for (int i = 0; i < dimension*dimension; i ++) {
             JPanel divisao = new JPanel(new GridLayout(dimension, dimension));
             divisao.setBorder(DIVISAO);
+            System.out.println(i%(dimension*dimension) + " " + i*dimension % (dimension*dimension));
+            int[] sqr = this.gerador.getBoard().getSqr(i%(dimension*dimension), i*dimension % (dimension*dimension));
             for (int j = 0; j < dimension*dimension; j++) {
-                divisao.add(new Botao(gerador.getBoard().getPos(i, j)));
+                divisao.add(new Botao(sqr[j]));
             }
             root.add(divisao);
         }
@@ -153,7 +155,20 @@ public class InterJogo extends javax.swing.JFrame {
     static final Color COR_SELECIONADO = Color.YELLOW;
 
     class Botao extends JLabel {
-
+        
+        /*
+        *   Ideias:
+        *   Provavelmente vamos ter que fazer um listener pra teclado
+        *   Toda vez que tiver um carinha selecionado e o jogador tentar
+        *   Atualizar o valor com o teclado chama a funcao que pega o i,j
+        *   do Botao atual e atribui ao valor digitado (o Listener muda o valor)
+        *   Talvez n seja um bom approach pro problema, mas vai que.
+        */
+        
+        public int i;
+        public int j;
+        public int valor;
+        
         public Botao(int valor) {
             super();
             String aux = Integer.toString(valor);
@@ -164,7 +179,7 @@ public class InterJogo extends javax.swing.JFrame {
         private void init() {
             setBackground(COR_NORMAL);
             setBorder(BORDA_NORMAL);
-            setPreferredSize(new Dimension(64, 64));
+            setPreferredSize(new Dimension(32, 32));
             setOpaque(true);
             Botao esteBotao = this;
             addMouseListener(new MouseAdapter() {
