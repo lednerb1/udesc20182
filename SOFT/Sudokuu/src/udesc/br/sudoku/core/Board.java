@@ -41,6 +41,10 @@ public class Board {
     public int getPos(int i, int j){
         return this.matrix[i][j];
     }
+
+    public void zeraPos(int i, int j){
+       this.matrix[i][j] = 0;
+    }
     
     public int[] getRow(int i){
         return this.matrix[i];

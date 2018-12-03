@@ -5,6 +5,7 @@
  */
 package udesc.br.sudoku.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,38 +41,45 @@ public class InterJogo extends javax.swing.JFrame {
 
     private int dimension;
     private JPanel gridPanel;
+    private Cronometro cronometro;
 
     /**
      * Creates new form InterJogo
      */
     public InterJogo(Generator gerador) {
         this.gerador = gerador;
+        gerador.removeBoard();
         this.grid = new JTextField[dimension][dimension];
         this.dimension = gerador.n;
-
         init();
 
     }
 
     private void init() {
+        JPanel p = new JPanel();
         JPanel root = new JPanel(new GridLayout(dimension, dimension));
-        
-        for (int i = 0; i < dimension*dimension; i ++) {
+
+        for (int i = 0; i < dimension * dimension; i++) {
             JPanel divisao = new JPanel(new GridLayout(dimension, dimension));
             divisao.setBorder(DIVISAO);
-            System.out.println(i%(dimension*dimension) + " " + i*dimension % (dimension*dimension));
-            int[] sqr = this.gerador.getBoard().getSqr(i%(dimension*dimension), i*dimension % (dimension*dimension));
-            for (int j = 0; j < dimension*dimension; j++) {
-                divisao.add(new Botao(sqr[j]));
+            System.out.println(i % (dimension * dimension) + " " + i * dimension % (dimension * dimension));
+            int[] sqr = this.gerador.getBoard().getSqr(i % (dimension * dimension), i * dimension % (dimension * dimension));
+            for (int j = 0; j < dimension * dimension; j++) {
+                divisao.add(new Botao(i, j, sqr[j]));
             }
             root.add(divisao);
         }
+        p.add(root);
 
-        getContentPane().add(root);
+        //p.add(new Cronometro());
+        //adicionem no P outras coisas VLW!!
+        getContentPane().add(p);
 
+        //Principal.add(root);
+        // Principal.add(new Cronometro());
         initKeyListener();
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         pack();
     }
 
@@ -80,7 +88,17 @@ public class InterJogo extends javax.swing.JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (selecionado != null) {
-                    selecionado.setText(Objects.toString(e.getKeyChar()));
+
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        selecionado.setBackground(COR_NORMAL);
+                        selecionado.setBorder(BORDA_NORMAL);
+                        selecionado = null;
+                    } else {
+                        String aux = Objects.toString(e.getKeyChar());
+                        selecionado.setText(aux);
+                        selecionado.valor = Integer.parseInt(aux);
+                        System.out.println(selecionado.valor);
+                    }
                 }
             }
         });
@@ -155,7 +173,7 @@ public class InterJogo extends javax.swing.JFrame {
     static final Color COR_SELECIONADO = Color.YELLOW;
 
     class Botao extends JLabel {
-        
+
         /*
         *   Ideias:
         *   Provavelmente vamos ter que fazer um listener pra teclado
@@ -163,16 +181,23 @@ public class InterJogo extends javax.swing.JFrame {
         *   Atualizar o valor com o teclado chama a funcao que pega o i,j
         *   do Botao atual e atribui ao valor digitado (o Listener muda o valor)
         *   Talvez n seja um bom approach pro problema, mas vai que.
-        */
-        
+         */
         public int i;
         public int j;
         public int valor;
-        
-        public Botao(int valor) {
+
+        public Botao(int i, int j, int valor) {
             super();
-            String aux = Integer.toString(valor);
+            String aux;
+            if (valor == 0) {
+                aux = "";
+            } else {
+                aux = Integer.toString(valor);
+            }
             super.setText(aux);
+            this.i = i;
+            this.j = j;
+            this.valor = valor;
             init();
         }
 
@@ -201,7 +226,33 @@ public class InterJogo extends javax.swing.JFrame {
         if (botao != null) {
             botao.setBackground(COR_SELECIONADO);
             botao.setBorder(BORDA_SELECIONADO);
+
         }
         selecionado = botao;
+        System.out.println(selecionado.valor);
     }
+
+    class Cronometro extends JLabel {
+
+        void init() {
+
+            setBackground(COR_NORMAL);
+            setBorder(BORDA_NORMAL);
+            setPreferredSize(new Dimension(180, 64));
+            setOpaque(true);
+            setVisible(true);
+        }
+
+        Cronometro() {
+            super();
+            super.setText("Tempo :" + S_tempo());
+            init();
+        }
+
+        private String S_tempo() {
+            return "";
+        }
+
+    }
+
 }

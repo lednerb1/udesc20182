@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/guilhermeutiama/Documents/retafinal/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/gui/inte.java</file>
-            <file>file:/Users/guilhermeutiama/Documents/retafinal/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/core/Generator.java</file>
-            <file>file:/Users/guilhermeutiama/Documents/retafinal/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/core/Board.java</file>
-            <file>file:/Users/guilhermeutiama/Documents/retafinal/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/gui/main_EX.java</file>
-            <file>file:/Users/guilhermeutiama/Documents/retafinal/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/gui/Main.java</file>
+            <file>file:/home/caio/NetBeansProjects/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/gui/inte.java</file>
+            <file>file:/home/caio/NetBeansProjects/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/gui/Main.java</file>
+            <file>file:/home/caio/NetBeansProjects/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/gui/InterJogo.java</file>
+            <file>file:/home/caio/NetBeansProjects/udesc20182/SOFT/Sudokuu/src/udesc/br/sudoku/gui/main_EX.java</file>
         </group>
     </open-files>
 </project-private>
