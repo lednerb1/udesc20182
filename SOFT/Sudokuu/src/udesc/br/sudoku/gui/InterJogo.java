@@ -8,6 +8,7 @@ package udesc.br.sudoku.gui;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -19,11 +20,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import udesc.br.sudoku.core.Board;
 import udesc.br.sudoku.core.Generator;
 
 /**
@@ -33,15 +37,18 @@ import udesc.br.sudoku.core.Generator;
 public class InterJogo extends javax.swing.JFrame {
 
     private Generator gerador;
+    private int[][] referencia;
     static final Border DIVISAO = BorderFactory.createLineBorder(Color.BLACK);
     Botao selecionado;
     private final JTextField[][] grid;
     private final Map<JTextField, Point> mapFieldToCoordinates
             = new HashMap<>();
 
+    private Botao_menu botao_teste;
+    private Botao_menu botao_resolver;
     private int dimension;
     private JPanel gridPanel;
-    private Cronometro cronometro;
+    // private Cronometro cronometro;
 
     /**
      * Creates new form InterJogo
@@ -49,6 +56,9 @@ public class InterJogo extends javax.swing.JFrame {
     public InterJogo(Generator gerador) {
         this.gerador = gerador;
         gerador.removeBoard();
+        
+        referencia = gerador.getBoard().copia();
+        
         this.grid = new JTextField[dimension][dimension];
         this.dimension = gerador.n;
         init();
@@ -57,6 +67,7 @@ public class InterJogo extends javax.swing.JFrame {
 
     private void init() {
         JPanel p = new JPanel();
+        JPanel painel_botao = new JPanel();
         JPanel root = new JPanel(new GridLayout(dimension, dimension));
 
         for (int i = 0; i < dimension * dimension; i++) {
@@ -69,14 +80,23 @@ public class InterJogo extends javax.swing.JFrame {
             }
             root.add(divisao);
         }
-        p.add(root);
 
         //p.add(new Cronometro());
         //adicionem no P outras coisas VLW!!
+        //botao
+        painel_botao.setLayout(new BoxLayout(painel_botao, BoxLayout.Y_AXIS));
+        botao_teste = new Botao_menu("Testar", 0);
+        botao_resolver = new Botao_menu("Resolver Sudoku", 1);
+
+        painel_botao.add(botao_resolver);
+        painel_botao.setBorder(DIVISAO);
+        painel_botao.add(botao_teste);
+        botao_teste.setAlignmentX(Component.LEFT_ALIGNMENT);
+        botao_resolver.setAlignmentX(Component.LEFT_ALIGNMENT);
+        p.add(root);
+        p.add(painel_botao);
         getContentPane().add(p);
 
-        //Principal.add(root);
-        // Principal.add(new Cronometro());
         initKeyListener();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -232,7 +252,7 @@ public class InterJogo extends javax.swing.JFrame {
         System.out.println(selecionado.valor);
     }
 
-    class Cronometro extends JLabel {
+    /* class Cronometro extends JLabel {
 
         void init() {
 
@@ -253,6 +273,46 @@ public class InterJogo extends javax.swing.JFrame {
             return "";
         }
 
+    }
+     */
+    class Botao_menu extends JLabel {
+
+        int tipo; //0 para teste 1 para resolver
+
+        private Botao_menu(String nome, int tipo) {
+            super();
+            super.setText(nome);
+            this.tipo = tipo;
+            init();
+        }
+
+        void init() {
+            setBorder(DIVISAO);
+            setOpaque(true);
+            Botao_menu esteBotao = this;
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println(".mouseClcked()");
+                    seleciona(esteBotao);
+                }
+
+            });
+        }
+
+        private void seleciona(Botao_menu esteBotao) {
+            if (esteBotao.tipo == 0) {
+                //testa
+            } else {
+                //resolve
+                resolve_board();
+            }
+        }
+
+        private void resolve_board() {
+            
+        
+        }
     }
 
 }
