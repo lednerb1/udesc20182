@@ -16,7 +16,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.BorderFactory;
@@ -47,18 +49,18 @@ public class InterJogo extends javax.swing.JFrame {
     private Botao_menu botao_teste;
     private Botao_menu botao_resolver;
     private int dimension;
-    private JPanel gridPanel;
-    // private Cronometro cronometro;
+    private JPanel p;
+    public List<Botao> lista_b = new ArrayList<Botao>();
+// private Cronometro cronometro;
 
     /**
      * Creates new form InterJogo
      */
     public InterJogo(Generator gerador) {
         this.gerador = gerador;
-        gerador.removeBoard();
-        
         referencia = gerador.getBoard().copia();
-        
+        gerador.removeBoard();
+
         this.grid = new JTextField[dimension][dimension];
         this.dimension = gerador.n;
         init();
@@ -66,7 +68,7 @@ public class InterJogo extends javax.swing.JFrame {
     }
 
     private void init() {
-        JPanel p = new JPanel();
+        p = new JPanel();
         JPanel painel_botao = new JPanel();
         JPanel root = new JPanel(new GridLayout(dimension, dimension));
 
@@ -76,7 +78,9 @@ public class InterJogo extends javax.swing.JFrame {
             System.out.println(i % (dimension * dimension) + " " + i * dimension % (dimension * dimension));
             int[] sqr = this.gerador.getBoard().getSqr(i % (dimension * dimension), i * dimension % (dimension * dimension));
             for (int j = 0; j < dimension * dimension; j++) {
-                divisao.add(new Botao(i, j, sqr[j]));
+                Botao c = new Botao(i, j, sqr[j]);
+                lista_b.add(c);
+                divisao.add(c);
             }
             root.add(divisao);
         }
@@ -310,8 +314,18 @@ public class InterJogo extends javax.swing.JFrame {
         }
 
         private void resolve_board() {
-            
-        
+            gerador.getBoard().matrix = referencia;
+            System.out.println(lista_b.size());
+            int cont = 0;
+            for (int i = 0; i < gerador.n * gerador.n; i++) {
+                int[] sqr = gerador.getBoard().getSqr(i % (dimension * dimension), i * dimension % (dimension * dimension));
+                for (int j = 0; j < gerador.n * gerador.n; j++) {
+                    lista_b.get(cont).setText(Integer.toString(sqr[j]));
+                    cont++;
+                }
+
+            }
+
         }
     }
 

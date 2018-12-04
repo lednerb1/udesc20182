@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class Board {
 
-    private int[][] matrix;
+    public int[][] matrix;
     int sqr;
     private char[] letras;
 
@@ -114,7 +114,7 @@ public class Board {
     }
 
     private boolean fillResto(int i, int j) {
-//        System.out.println(i+","+j);
+        System.out.println(i + "," + j);
         if (j >= sqr * sqr && i < sqr * sqr - 1) {
             i++;
             j = 0;
@@ -266,5 +266,11 @@ public class Board {
 
     }
 
-  
+    public void generate(int[][] principal) {
+
+        this.matrix = principal;
+        //fillDiagonal();
+        fillResto(0, sqr);
+        print();
+    }
 }
