@@ -75,7 +75,7 @@ public class InterJogo extends javax.swing.JFrame {
         for (int i = 0; i < dimension * dimension; i++) {
             JPanel divisao = new JPanel(new GridLayout(dimension, dimension));
             divisao.setBorder(DIVISAO);
-            System.out.println(i % (dimension * dimension) + " " + i * dimension % (dimension * dimension));
+//            System.out.println(i % (dimension * dimension) + " " + i * dimension % (dimension * dimension));
             int[] sqr = this.gerador.getBoard().getSqr(i % (dimension * dimension), i * dimension % (dimension * dimension));
             for (int j = 0; j < dimension * dimension; j++) {
                 Botao c = new Botao(i, j, sqr[j]);
@@ -84,7 +84,6 @@ public class InterJogo extends javax.swing.JFrame {
             }
             root.add(divisao);
         }
-
         //p.add(new Cronometro());
         //adicionem no P outras coisas VLW!!
         //botao
@@ -118,10 +117,22 @@ public class InterJogo extends javax.swing.JFrame {
                         selecionado.setBorder(BORDA_NORMAL);
                         selecionado = null;
                     } else {
-                        String aux = Objects.toString(e.getKeyChar());
-                        selecionado.setText(aux);
-                        selecionado.valor = Integer.parseInt(aux);
-                        System.out.println(selecionado.valor);
+                        char aux = Objects.toString(e.getKeyChar()).toUpperCase().charAt(0);
+                        int valor;
+                        if(aux >= 'A' && aux <= 'Z'){
+                            valor = aux - 'A' + 10;
+                        }else{
+                            try{
+                                valor = Integer.parseInt(""+aux+"");
+                                selecionado.setText(""+aux);
+                                selecionado.valor = valor;
+                                gerador.getBoard().matrix[selecionado.i][selecionado.j] = valor;
+                            }catch (Exception exc){
+                                System.err.println("Valor nao eh um inteiro, nao sera atribuido");
+                                valor = -1;
+                            }
+                        } 
+//                        System.out.println(selecionado.valor);
                     }
                 }
             }
@@ -215,6 +226,8 @@ public class InterJogo extends javax.swing.JFrame {
             String aux;
             if (valor == 0) {
                 aux = "";
+            } else if(valor > 9){
+                aux = "" + (char)('A'+valor-10) + "";
             } else {
                 aux = Integer.toString(valor);
             }
@@ -253,7 +266,7 @@ public class InterJogo extends javax.swing.JFrame {
 
         }
         selecionado = botao;
-        System.out.println(selecionado.valor);
+//        System.out.println(selecionado.valor);
     }
 
     /* class Cronometro extends JLabel {
@@ -297,7 +310,7 @@ public class InterJogo extends javax.swing.JFrame {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    System.out.println(".mouseClcked()");
+//                    System.out.println(".mouseClcked()");
                     seleciona(esteBotao);
                 }
 
@@ -305,17 +318,17 @@ public class InterJogo extends javax.swing.JFrame {
         }
 
         private void seleciona(Botao_menu esteBotao) {
-            System.out.println(esteBotao.tipo);
+//            System.out.println(esteBotao.tipo);
             if (esteBotao.tipo == 0) {
                 //testa
                 if (enviar()) {
-                    System.out.println("Parabens");
+//                    System.out.println("Parabens");
                     // Janela de parabens, voce venceu
                     JFrame frame = new JFrame("PARABENS");
                     JOptionPane.showMessageDialog(frame, "PARABENS VOCE VENCEU", "PARABENS", 0);
                     exit(1);
                 } else {
-                    System.out.println("Burro");
+//                    System.out.println("Burro");
                     // Continua o jogo finge que nada aconteceu.
                     // Se der, pintar os quadradinhos errados de vermelho
                     // 
@@ -328,12 +341,18 @@ public class InterJogo extends javax.swing.JFrame {
 
         private void resolve_board() {
             gerador.getBoard().matrix = referencia;
-            System.out.println(lista_b.size());
+//            System.out.println(lista_b.size());
             int cont = 0;
+            String res;
             for (int i = 0; i < gerador.n * gerador.n; i++) {
                 int[] sqr = gerador.getBoard().getSqr(i % (dimension * dimension), i * dimension % (dimension * dimension));
                 for (int j = 0; j < gerador.n * gerador.n; j++) {
-                    lista_b.get(cont).setText(Integer.toString(sqr[j]));
+                    if(sqr[j] > 9){
+                        res = "" + (char)('A'+sqr[j]-10) + "";
+                    } else {
+                        res = Integer.toString(sqr[j]);
+                    }
+                    lista_b.get(cont).setText(res);
                     cont++;
                 }
 
@@ -347,7 +366,7 @@ public class InterJogo extends javax.swing.JFrame {
             for (int i = 0; i < dimension * dimension; i++) {
                 for (int j = 0; j < dimension * dimension; j++) {
 //                    System.out.println("i: " + i + "\nj: " + j);
-                    if (!temp.checkSurrounds(i, j, temp.getPos(i, j))) {
+                    if (!temp.checkSurrounds(i, j, temp.getPos(i, j), true)) {
                         return false;
                     }
                 }

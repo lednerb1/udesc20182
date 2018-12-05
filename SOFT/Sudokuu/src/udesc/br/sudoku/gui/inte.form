@@ -25,80 +25,43 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="base5" min="-2" pref="103" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="medio5" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="dificil5" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="facil5" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="base10" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Component id="medio10" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="dificil10" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="facil10" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="37" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="base17" min="-2" pref="104" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="medio17" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="dificil17" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="facil17" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                      <Component id="sudokuLabel" pref="387" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                      <Component id="sudokuLabel" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="base5" min="-2" pref="104" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="base10" min="-2" pref="104" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="base17" min="-2" pref="104" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+              <Component id="comboFacil" min="-2" pref="194" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="sudokuLabel" min="-2" pref="60" max="-2" attributes="0"/>
-              <EmptySpace pref="49" max="32767" attributes="0"/>
+              <EmptySpace pref="36" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="base5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="base10" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="base17" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="facil5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="medio5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="dificil5" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="facil10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="medio10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="dificil10" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="facil17" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="medio17" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="dificil17" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="comboFacil" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,7 +69,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="base5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="4x4"/>
+        <Property name="text" type="java.lang.String" value="Jogar 4x4"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="base5ActionPerformed"/>
@@ -114,7 +77,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="base10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="9x9"/>
+        <Property name="text" type="java.lang.String" value="Jogar 9x9"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="base10ActionPerformed"/>
@@ -122,82 +85,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="base17">
       <Properties>
-        <Property name="text" type="java.lang.String" value="16x16"/>
+        <Property name="text" type="java.lang.String" value="Jogar 16x16"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="base17ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="dificil5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Dif&#xed;cil"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dificil5ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="medio5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Medio"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medio5ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="facil5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Facil"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="facil5ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="dificil10">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Dif&#xed;cil"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dificil10ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="medio10">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Medio"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medio10ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="facil10">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Facil"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="facil10ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="dificil17">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Dif&#xed;cil"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dificil17ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="medio17">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Medio"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medio17ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="facil17">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Facil"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="facil17ActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="sudokuLabel">
@@ -207,6 +98,23 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Soft Sudoku"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboFacil">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="Facil"/>
+            <StringItem index="1" value="Medio"/>
+            <StringItem index="2" value="Dificil"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboFacilActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

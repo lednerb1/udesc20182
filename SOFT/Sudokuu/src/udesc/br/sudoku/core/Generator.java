@@ -27,13 +27,13 @@ public class Generator {
     public void removeBoard() {
         int quantidade_removido = 0;
 
-        if (diff == 0) {
+        if (diff == 1) {
             double aux =  16 * 0.5;
             quantidade_removido = (int) aux;
-        } else if (diff == 1) {
+        } else if (diff == 2) {
             double aux = 81 * 0.75;
             quantidade_removido = (int) aux;
-        } else if (diff == 2) {
+        } else if (diff == 3) {
             double aux = 256 * 0.90;
             quantidade_removido = (int) aux;
 

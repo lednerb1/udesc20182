@@ -26,15 +26,6 @@ public class inte extends javax.swing.JFrame {
     public inte() {
         this.setTitle("Sudoku");
         initComponents();
-        buttons.add(facil5);
-        buttons.add(medio5);
-        buttons.add(dificil5);
-        buttons.add(facil10);
-        buttons.add(medio10);
-        buttons.add(dificil10);
-        buttons.add(facil17);
-        buttons.add(medio17);
-        buttons.add(dificil17);
         hide_all();
 
     }
@@ -51,105 +42,41 @@ public class inte extends javax.swing.JFrame {
         base5 = new javax.swing.JButton();
         base10 = new javax.swing.JButton();
         base17 = new javax.swing.JButton();
-        dificil5 = new javax.swing.JButton();
-        medio5 = new javax.swing.JButton();
-        facil5 = new javax.swing.JButton();
-        dificil10 = new javax.swing.JButton();
-        medio10 = new javax.swing.JButton();
-        facil10 = new javax.swing.JButton();
-        dificil17 = new javax.swing.JButton();
-        medio17 = new javax.swing.JButton();
-        facil17 = new javax.swing.JButton();
         sudokuLabel = new javax.swing.JLabel();
+        comboFacil = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        base5.setText("4x4");
+        base5.setText("Jogar 4x4");
         base5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 base5ActionPerformed(evt);
             }
         });
 
-        base10.setText("9x9");
+        base10.setText("Jogar 9x9");
         base10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 base10ActionPerformed(evt);
             }
         });
 
-        base17.setText("16x16");
+        base17.setText("Jogar 16x16");
         base17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 base17ActionPerformed(evt);
             }
         });
 
-        dificil5.setText("Difícil");
-        dificil5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dificil5ActionPerformed(evt);
-            }
-        });
-
-        medio5.setText("Medio");
-        medio5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                medio5ActionPerformed(evt);
-            }
-        });
-
-        facil5.setText("Facil");
-        facil5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facil5ActionPerformed(evt);
-            }
-        });
-
-        dificil10.setText("Difícil");
-        dificil10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dificil10ActionPerformed(evt);
-            }
-        });
-
-        medio10.setText("Medio");
-        medio10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                medio10ActionPerformed(evt);
-            }
-        });
-
-        facil10.setText("Facil");
-        facil10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facil10ActionPerformed(evt);
-            }
-        });
-
-        dificil17.setText("Difícil");
-        dificil17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dificil17ActionPerformed(evt);
-            }
-        });
-
-        medio17.setText("Medio");
-        medio17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                medio17ActionPerformed(evt);
-            }
-        });
-
-        facil17.setText("Facil");
-        facil17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facil17ActionPerformed(evt);
-            }
-        });
-
         sudokuLabel.setFont(new java.awt.Font("Lucida Sans Typewriter", 1, 48)); // NOI18N
         sudokuLabel.setText("Soft Sudoku");
+
+        comboFacil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facil", "Medio", "Dificil" }));
+        comboFacil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboFacilActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,155 +85,93 @@ public class inte extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(base5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(medio5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(dificil5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(facil5)))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(base10, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(medio10, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(dificil10, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(facil10)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(base17, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(medio17, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(dificil17, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(facil17))))
+                        .addGap(64, 64, 64)
+                        .addComponent(sudokuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(sudokuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(37, 37, 37)
+                        .addComponent(base5, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(base10, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(base17, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(comboFacil, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addComponent(sudokuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(base5)
                     .addComponent(base10)
                     .addComponent(base17))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(facil5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(medio5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dificil5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(facil10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(medio10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dificil10))
-                    .addComponent(facil17)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(medio17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dificil17)))
-                .addGap(34, 34, 34))
+                .addGap(38, 38, 38)
+                .addComponent(comboFacil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void base10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base10ActionPerformed
-        setNivel(3);
-        hide_all();
-        this.facil10.setVisible(true);
-        this.medio10.setVisible(true);
-        this.dificil10.setVisible(true);
+        String diff = (String) comboFacil.getSelectedItem();
+        if(diff.equals("Facil")){
+            setNivel(1);
+        }else if(diff.equals("Medio")){
+            setNivel(2);
+        }else{
+            setNivel(3);
+        }
+        
+        generator = new Generator(3, nivel);
+        jogo = new InterJogo(generator);
+        this.setVisible(false);
+        jogo.setVisible(true);
+        
     }//GEN-LAST:event_base10ActionPerformed
 
     private void base5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base5ActionPerformed
-        setNivel(2);
-        hide_all();
-        this.facil5.setVisible(true);
-        this.medio5.setVisible(true);
-        this.dificil5.setVisible(true);
+        String diff = (String) comboFacil.getSelectedItem();
+        if(diff.equals("Facil")){
+            setNivel(1);
+        }else if(diff.equals("Medio")){
+            setNivel(2);
+        }else{
+            setNivel(3);
+        }
+        
+        generator = new Generator(2, nivel);
+        jogo = new InterJogo(generator);
+        this.setVisible(false);
+        jogo.setVisible(true);
 
     }//GEN-LAST:event_base5ActionPerformed
 
     private void base17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base17ActionPerformed
-        setNivel(4);
-        hide_all();
-        this.facil17.setVisible(true);
-        this.medio17.setVisible(true);
-        this.dificil17.setVisible(true);
+        String diff = (String) comboFacil.getSelectedItem();
+        if(diff.equals("Facil")){
+            setNivel(1);
+        }else if(diff.equals("Medio")){
+            setNivel(2);
+        }else{
+            setNivel(3);
+        }
+        
+        generator = new Generator(4, nivel);
+        jogo = new InterJogo(generator);
+        this.setVisible(false);
+        jogo.setVisible(true);
     }//GEN-LAST:event_base17ActionPerformed
 
-    private void facil5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facil5ActionPerformed
-        generator = new Generator(nivel, 0);
-        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_facil5ActionPerformed
-
-    private void medio5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medio5ActionPerformed
-        generator = new Generator(nivel, 1);
-        jogo = new InterJogo(generator);        // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_medio5ActionPerformed
-
-    private void dificil5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dificil5ActionPerformed
-        generator = new Generator(nivel, 2);
-        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_dificil5ActionPerformed
-
-    private void facil10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facil10ActionPerformed
-        generator = new Generator(nivel, 0);
-        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_facil10ActionPerformed
-
-    private void facil17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facil17ActionPerformed
-        generator = new Generator(nivel, 0);
-        jogo = new InterJogo(generator);// para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_facil17ActionPerformed
-
-    private void medio10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medio10ActionPerformed
-        generator = new Generator(nivel, 1);
-        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_medio10ActionPerformed
-
-    private void medio17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medio17ActionPerformed
-        generator = new Generator(nivel, 1);
-        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_medio17ActionPerformed
-
-    private void dificil10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dificil10ActionPerformed
-        generator = new Generator(nivel, 2);
-        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_dificil10ActionPerformed
-
-    private void dificil17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dificil17ActionPerformed
-        generator = new Generator(nivel, 2);
-        jogo = new InterJogo(generator); // para referenciar o generator no interfacejogo
-        this.setVisible(false);
-        jogo.setVisible(true);
-    }//GEN-LAST:event_dificil17ActionPerformed
+    private void comboFacilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFacilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboFacilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,15 +221,7 @@ public class inte extends javax.swing.JFrame {
     private javax.swing.JButton base10;
     private javax.swing.JButton base17;
     private javax.swing.JButton base5;
-    private javax.swing.JButton dificil10;
-    private javax.swing.JButton dificil17;
-    private javax.swing.JButton dificil5;
-    private javax.swing.JButton facil10;
-    private javax.swing.JButton facil17;
-    private javax.swing.JButton facil5;
-    private javax.swing.JButton medio10;
-    private javax.swing.JButton medio17;
-    private javax.swing.JButton medio5;
+    private javax.swing.JComboBox<String> comboFacil;
     private javax.swing.JLabel sudokuLabel;
     // End of variables declaration//GEN-END:variables
 }

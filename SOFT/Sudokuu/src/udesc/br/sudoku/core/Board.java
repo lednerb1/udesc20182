@@ -78,7 +78,7 @@ public class Board {
     private void generate() {
         fillDiagonal();
         fillResto(0, sqr);
-        print();
+//        print();
     }
 
     private void fillDiagonal() {
@@ -87,41 +87,52 @@ public class Board {
         }
     }
 
-    public boolean checkSurrounds(int i, int j, int m) {
-
+    public boolean checkSurrounds(int i, int j, int m, boolean debug) {
+        
+        if(debug){
+            System.out.println("Verifying " + m + " at " + i + " " + j);
+            if(!(m > 0 && m <= sqr*sqr)){
+                System.out.println("outofbounds");
+                return false;
+            }
+            
+        }
         // Checking Lines and Cols
         for (int c = 0; c < sqr * sqr; c++) {
+//            System.out.print("lines ");
             if (matrix[i][c] == m && c != j) {
                 return false;
             }
         }
+        
         for (int c = 0; c < sqr * sqr; c++) {
+//            System.out.print("cols ");
             if (matrix[c][j] == m && c != i) {
+//                System.out.println("Found at" + c + " " + j + " " + matrix[c][j]);
                 return false;
             }
         }
-
+        
         // Checking Box
         int l = i - i % sqr;
         int c = j - j % sqr;
         int ll = l + sqr;
         int cc = c + sqr;
-//        System.out.println("LL: " + ll + "\nCC: " + cc);
         for (; l < ll; l++) {
+//            System.out.print("sqr1 ");
             for (c = j - j % sqr; c < cc; c++) {
-//                System.out.print(matrix[l][c] + " ");
+//                System.out.print("sqr2 ");
                 if (matrix[l][c] == m && (l != i || c != j)) {
                     return false;
                 }
             }
-//            System.out.println();
         }
-
+//        System.out.println("allg");
         return true;
     }
 
     private boolean fillResto(int i, int j) {
-        System.out.println(i + "," + j);
+//        System.out.println(i + "," + j);
         if (j >= sqr * sqr && i < sqr * sqr - 1) {
             i++;
             j = 0;
@@ -150,7 +161,7 @@ public class Board {
 
         for (int next = 1; next <= sqr * sqr; next++) {
 
-            if (checkSurrounds(i, j, next)) {
+            if (checkSurrounds(i, j, next, false)) {
                 matrix[i][j] = next;
 
                 if (fillResto(i, j + 1)) {
@@ -278,6 +289,6 @@ public class Board {
         this.matrix = principal;
         //fillDiagonal();
         fillResto(0, sqr);
-        print();
+//        print();
     }
 }
