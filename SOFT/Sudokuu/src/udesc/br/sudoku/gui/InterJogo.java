@@ -5,8 +5,6 @@
  */
 package udesc.br.sudoku.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -22,9 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.print.attribute.standard.Media;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -310,13 +308,13 @@ public class InterJogo extends javax.swing.JFrame {
             System.out.println(esteBotao.tipo);
             if (esteBotao.tipo == 0) {
                 //testa
-                if(enviar()){
+                if (enviar()) {
                     System.out.println("Parabens");
                     // Janela de parabens, voce venceu
                     JFrame frame = new JFrame("PARABENS");
                     JOptionPane.showMessageDialog(frame, "PARABENS VOCE VENCEU", "PARABENS", 0);
                     exit(1);
-                }else {
+                } else {
                     System.out.println("Burro");
                     // Continua o jogo finge que nada aconteceu.
                     // Se der, pintar os quadradinhos errados de vermelho
@@ -342,14 +340,14 @@ public class InterJogo extends javax.swing.JFrame {
             }
 
         }
-        
+
         private boolean enviar() {
 //            System.out.println("EXECUTANO -- DIMENSION = " + dimension*dimension);
             Board temp = gerador.getBoard();
-            for(int i=0; i<dimension*dimension; i++){
-                for(int j=0; j<dimension*dimension; j++){
+            for (int i = 0; i < dimension * dimension; i++) {
+                for (int j = 0; j < dimension * dimension; j++) {
 //                    System.out.println("i: " + i + "\nj: " + j);
-                    if(!temp.checkSurrounds(i, j, temp.getPos(i, j))){
+                    if (!temp.checkSurrounds(i, j, temp.getPos(i, j))) {
                         return false;
                     }
                 }

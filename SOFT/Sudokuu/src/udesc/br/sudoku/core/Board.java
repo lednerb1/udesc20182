@@ -256,7 +256,7 @@ public class Board {
         return true;
     }
 
-    private Board() {
+    public Board() {
     }
 
     public int[][] copia() {
