@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -305,8 +307,21 @@ public class InterJogo extends javax.swing.JFrame {
         }
 
         private void seleciona(Botao_menu esteBotao) {
+            System.out.println(esteBotao.tipo);
             if (esteBotao.tipo == 0) {
                 //testa
+                if(enviar()){
+                    System.out.println("Parabens");
+                    // Janela de parabens, voce venceu
+                    JFrame frame = new JFrame("PARABENS");
+                    JOptionPane.showMessageDialog(frame, "PARABENS VOCE VENCEU", "PARABENS", 0);
+                    exit(1);
+                }else {
+                    System.out.println("Burro");
+                    // Continua o jogo finge que nada aconteceu.
+                    // Se der, pintar os quadradinhos errados de vermelho
+                    // 
+                }
             } else {
                 //resolve
                 resolve_board();
@@ -326,6 +341,20 @@ public class InterJogo extends javax.swing.JFrame {
 
             }
 
+        }
+        
+        private boolean enviar() {
+//            System.out.println("EXECUTANO -- DIMENSION = " + dimension*dimension);
+            Board temp = gerador.getBoard();
+            for(int i=0; i<dimension*dimension; i++){
+                for(int j=0; j<dimension*dimension; j++){
+//                    System.out.println("i: " + i + "\nj: " + j);
+                    if(!temp.checkSurrounds(i, j, temp.getPos(i, j))){
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 

@@ -87,11 +87,16 @@ public class Board {
         }
     }
 
-    private boolean checkSurrounds(int i, int j, int m) {
+    public boolean checkSurrounds(int i, int j, int m) {
 
         // Checking Lines and Cols
         for (int c = 0; c < sqr * sqr; c++) {
-            if (matrix[i][c] == m || matrix[c][j] == m) {
+            if (matrix[i][c] == m && c != j) {
+                return false;
+            }
+        }
+        for (int c = 0; c < sqr * sqr; c++) {
+            if (matrix[c][j] == m && c != i) {
                 return false;
             }
         }
@@ -101,13 +106,15 @@ public class Board {
         int c = j - j % sqr;
         int ll = l + sqr;
         int cc = c + sqr;
-
+//        System.out.println("LL: " + ll + "\nCC: " + cc);
         for (; l < ll; l++) {
             for (c = j - j % sqr; c < cc; c++) {
-                if (matrix[l][c] == m) {
+//                System.out.print(matrix[l][c] + " ");
+                if (matrix[l][c] == m && (l != i || c != j)) {
                     return false;
                 }
             }
+//            System.out.println();
         }
 
         return true;
